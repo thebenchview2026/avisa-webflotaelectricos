@@ -1,0 +1,240 @@
+RESUMEN EJECUTIVO
+El sitio tiene una base SEO muy sólida con sistemas avanzados que superan a la mayoría de webs corporativas del sector. Sin embargo, se han detectado errores críticos que están perjudicando activamente el posicionamiento, sobre todo una incoherencia grave de dominio entre grupoavisa.com y avisa.es.
+
+Puntuación por áreas (de 1 a 10):
+Área	Nota	Estado
+Arquitectura técnica	9/10	Excelente
+Meta tags y Open Graph	5/10	Errores críticos
+Datos estructurados (Schema.org)	7/10	Bueno con errores
+Sitemaps	8/10	Muy bueno
+URLs y slugs	9/10	Excelente
+Rendimiento (Core Web Vitals)	8/10	Muy bueno
+SEO Local	6/10	Datos incompletos
+Accesibilidad	8/10	Muy bueno
+Indexación y robots.txt	8/10	Muy bueno
+Contenido y autoridad topical	9/10	Excelente
+SEO para IA (LLMs)	10/10	Pionero
+Imágenes	7/10	Bueno con mejoras
+Nota global: 7.8/10
+
+1. ERROR CRÍTICO: INCOHERENCIA DE DOMINIO
+Hallazgo
+El sitio usa dos dominios diferentes en distintas partes del código:
+
+avisa.es → Usado en el motor SEO interno, sitemaps, canónicas dinámicas, y slugs
+grupoavisa.com → Usado en index.html, Open Graph, Schema.org estático, llms.txt, og-image
+Impacto (CRÍTICO)
+Google ve dos sitios diferentes. Las canónicas del index.html apuntan a grupoavisa.com pero el motor SEO genera canónicas con avisa.es. Esto causa canibalización o ignorancia de canónicas.
+Open Graph apunta a grupoavisa.com → Las imágenes sociales (og-image.jpg) no se resolverán si el dominio real es avisa.es.
+Schema.org LocalBusiness y Organization referencian grupoavisa.com, pero los sitemaps apuntan a avisa.es. Los motores de búsqueda no pueden consolidar la entidad.
+El archivo llms.txt tiene todas las URLs con grupoavisa.com pero el sitemap usa avisa.es.
+Archivos afectados
+Archivo	Dominio usado
+index.html (líneas 23, 49, 52, 61, 68-190)	grupoavisa.com
+public/llms.txt (130+ URLs)	grupoavisa.com
+public/robots.txt (línea 68)	avisa.es
+public/sitemap.xml (5 sub-sitemaps)	avisa.es
+src/lib/seo-engine.ts (BASE_URL)	avisa.es
+src/lib/seo/sitemap-engine.ts (BASE_URL)	avisa.es
+src/hooks/useSEO.ts (canónicas)	avisa.es
+src/hooks/useSEOAuto.ts (BASE_URL, og_image)	mezclado
+src/lib/seo-service.ts (og_image fallback)	grupoavisa.com
+Acción requerida
+Decidir cuál es el dominio definitivo (avisa.es o grupoavisa.com) y unificar todos los archivos. Si hay redirección 301 entre ambos, asegurarse de que todo apunte al dominio canónico.
+
+2. META TAGS Y OPEN GRAPH
+Lo que está bien
+Cada página usa hooks personalizados (usePageSEO, useSEOAuto) que inyectan dinámicamente <title>, <meta description>, Open Graph y Twitter Cards.
+Sistema de prioridades: override manual (DB) > auto-generado > fallback hardcoded.
+Directivas robots avanzadas: max-image-preview:large, max-snippet:-1, max-video-preview:-1.
+Geolocalización correcta: geo.region, geo.placename, geo.position, ICBM.
+Problemas detectados
+Problema	Severidad	Detalle
+Canónica estática incorrecta en index.html	CRÍTICO	<link rel="canonical" href="https://grupoavisa.com/"> — debería ser avisa.es o el dominio correcto
+OG image apunta a dominio incorrecto	ALTO	https://grupoavisa.com/og-image.jpg — si el dominio es avisa.es, la imagen no se resuelve
+last-modified estático hardcodeado	MEDIO	<meta name="last-modified" content="2025-01-15"> — tiene más de un año, no se actualiza
+Falta og:image personalizada por página	MEDIO	Todas las páginas usan el mismo fallback og-image.jpg, no hay imágenes OG específicas por marca/servicio
+Apple Touch Icon usa vite.svg	BAJO	<link rel="apple-touch-icon" href="/vite.svg"> — debería ser un PNG 180x180 con el logo real
+Favicon es vite.svg genérico	BAJO	Se muestra el logo de Vite, no el de Grupo Avisa
+Falta og:image:type	BAJO	No especifica el tipo MIME de la imagen OG
+3. DATOS ESTRUCTURADOS (SCHEMA.ORG)
+Lo que está bien
+LocalBusiness completo con coordenadas, horarios, servicios y OfferCatalog.
+Organization con logo y contacto.
+FAQPage dinámico que se genera automáticamente para cada página de preguntas.
+BreadcrumbList con inyección/limpieza automática en cada navegación SPA.
+VehicleSchema con precios, marca y ofertas.
+ArticleSchema para contenido editorial.
+WebSiteSchema con SearchAction para sitelinks searchbox.
+Problemas detectados
+Problema	Severidad	Detalle
+Teléfono placeholder en LocalBusiness	CRÍTICO	"telephone": "+34-XXX-XXX-XXX" — es un placeholder, no el teléfono real (955 03 46 00)
+Email genérico en LocalBusiness	ALTO	"email": "info@grupoavisa.com" — el email real es flotas@grupoavisa.com
+sameAs vacío	MEDIO	"sameAs": [] — faltan enlaces a perfiles sociales (Google Business, LinkedIn, etc.)
+aggregateRating posiblemente ficticio	ALTO	"ratingValue": "4.8", "reviewCount": "47" — si no hay reseñas verificables, Google puede penalizar por datos engañosos
+Falta ContactPoint.telephone	MEDIO	El bloque Organization no tiene teléfono
+URLs de Schema apuntan a grupoavisa.com	CRÍTICO	Todos los @id, url, image en Schema usan grupoavisa.com
+Falta logo.png real	MEDIO	"image": "https://grupoavisa.com/logo.png" — no hay archivo logo.png en public/
+streetAddress genérico	MEDIO	Solo dice "Sevilla", debería tener la dirección completa de la empresa
+4. SITEMAPS
+Lo que está bien
+Sitemap Index correcto con 5 sub-sitemaps especializados.
+Generación dinámica desde Supabase (vehículos, promociones, FAQs, páginas CMS).
+Sub-sitemaps específicos: sitemap-pages.xml, sitemap-programmatic.xml, sitemap-faq.xml, sitemap-guides.xml, sitemap-vehicles.xml.
+Ping automático a Google y Bing (IndexNow) cuando se publican nuevas FAQs.
+Filtrado inteligente: solo incluye entidades published y slugs canónicos.
+Problemas detectados
+Problema	Severidad	Detalle
+Sitemaps servidos como componente React	ALTO	Los sitemaps se renderizan como <pre> dentro de una SPA React. Los bots que no ejecutan JavaScript NO verán el contenido. El sitemap estático en public/sitemap.xml solo contiene el índice, no las URLs reales.
+Falta <lastmod> en sitemap index	MEDIO	El sitemap index no incluye fechas de última modificación de cada sub-sitemap
+robots.txt apunta a avisa.es/sitemap.xml	MEDIO	Incoherencia con el dominio del index.html (grupoavisa.com)
+Recomendación crítica
+Los sub-sitemaps (sitemap-pages.xml, sitemap-faq.xml, etc.) deben generarse como archivos estáticos o servirse desde un endpoint del servidor que devuelva Content-Type: application/xml. Actualmente dependen de que el bot renderice JavaScript, lo cual Google sí hace pero Bing y otros no siempre.
+
+5. ESTRUCTURA DE URLs Y SLUGS
+Lo que está bien
+URLs limpias y descriptivas: /preguntas/cuanto-cuesta-renting, /marcas/audi/promociones/audi-q5-40-tdi-quattro.
+Sistema de slugs centralizado con tabla slugs en Supabase, con flag is_canonical.
+Resolución dinámica con catch-all route (/* → DynamicPage).
+Normalización: trailing slashes eliminadas, lowercase forzado.
+Motor de redirecciones 301 automático cuando se discontinúa un vehículo.
+Deduplicación de slugs con sufijo numérico automático.
+SEO Programático: /renting/{marca}/{modelo}/{ciudad} generando miles de landing pages.
+Problemas detectados
+Problema	Severidad	Detalle
+Redirecciones 301 del lado del cliente	MEDIO	Se hacen con <Navigate replace> de React Router, no con header HTTP 301 real. Los bots que no ejecutan JS no verán la redirección.
+Falta gestión de /admin/* en robots.txt	BAJO	Las rutas admin no están explícitamente bloqueadas en robots.txt (aunque requieren auth)
+6. RENDIMIENTO Y CORE WEB VITALS
+Lo que está bien
+Code splitting agresivo: todas las rutas con lazy() y Suspense.
+Manual chunks en Vite: react-vendor e i18n-vendor separados para mejor caching.
+CSS code splitting activado.
+OptimizedImage con IntersectionObserver, WebP automático, fetchPriority="high" para LCP.
+Preconnect a Google Fonts, gstatic, Remix Icons.
+Font loading no bloqueante con preload + onload pattern.
+Cache en memoria para slugs (5 min TTL) y datos de página (10 min TTL).
+Preload de slugs populares al iniciar la app.
+Problemas detectados
+Problema	Severidad	Detalle
+SPA sin SSR/SSG	ALTO	Todo el contenido se renderiza en el cliente. Aunque Google renderiza JS, el tiempo hasta el primer contenido visible (FCP) es más lento que con SSR. Los bots más simples no ven contenido.
+Remix Icons cargados externamente	MEDIO	cdn.remixicon.com añade una dependencia de red y posible bloqueo de renderizado
+Falta <noscript> en páginas internas	MEDIO	Solo el index.html tiene fallback noscript, las páginas internas de la SPA no
+No hay service worker / PWA	BAJO	Sin cache offline ni instalación en dispositivo
+assetsInlineLimit: 4096 puede ser agresivo	BAJO	Iconos SVG pequeños se inline como base64, aumentando el tamaño del bundle
+7. SEO LOCAL
+Lo que está bien
+Meta tags de geolocalización correctos (Sevilla, Andalucía).
+Schema LocalBusiness con coordenadas, horario, y areaServed (Sevilla, Andalucía, España).
+GeoCircle con radio de 50km.
+Problemas detectados
+Problema	Severidad	Detalle
+Teléfono placeholder +34-XXX-XXX-XXX	CRÍTICO	Google My Business sincroniza con Schema. Un teléfono placeholder invalida la ficha
+Dirección incompleta	ALTO	Solo "Sevilla" como streetAddress. Falta calle y número real
+Código postal genérico 41000	MEDIO	Es el código postal de Sevilla centro, debería ser el real de la oficina
+sameAs vacío	MEDIO	Falta perfil de Google Business Profile, LinkedIn, etc.
+Falta openingHoursSpecification para sábados	BAJO	Solo L-V. Si cierran sábados, debería indicarse explícitamente
+8. ACCESIBILIDAD (impacto en SEO)
+Lo que está bien
+HTML semántico: <header>, <main>, <nav>, <footer>, <section>, <article>.
+Skip link implementado: "Saltar al contenido" → #main-content.
+ARIA en menús: aria-expanded, aria-controls, aria-label.
+Honeypot accesible: tabIndex={-1} + aria-hidden="true" en campos anti-spam.
+Labels en formularios: <label htmlFor> correctamente vinculados.
+Jerarquía de headings generalmente correcta (h1→h2→h3).
+Página de declaración de accesibilidad propia con roadmap WCAG 2.1 AA.
+Problemas detectados
+Problema	Severidad	Detalle
+lang="es" sin región	BAJO	Podría ser lang="es-ES" para mayor precisión
+Posibles IDs duplicados en páginas generadas	MEDIO	Reconocido en la propia declaración de accesibilidad
+Imágenes decorativas sin alt=""	BAJO	Algunas imágenes en páginas legacy usan <img> sin el componente OptimizedImage
+9. INDEXACIÓN Y ROBOTS.TXT
+Lo que está bien
+Robots.txt completo con reglas específicas por bot.
+Control de indexación programática inteligente: evalúa contenido thin, volumen de búsqueda, y disponibilidad de ofertas.
+Override manual desde admin para forzar index/noindex.
+Páginas que correctamente usan noindex: /confirmacion, legales, 404.
+Borradores (status !== 'published') automáticamente noindex.
+Problemas detectados
+Problema	Severidad	Detalle
+Crawl-delay en Googlebot	BAJO	Google ignora Crawl-delay. No causa problema pero es código inútil.
+Rutas admin no bloqueadas	BAJO	/admin/* no está en Disallow. Aunque requiere auth, es buena práctica bloquearlo
+Reglas Allow redundantes bajo User-agent: *	BAJO	Las líneas Allow: /marcas/, Allow: /preguntas/, etc. son redundantes si ya hay Allow: /
+10. CONTENIDO Y AUTORIDAD TOPICAL
+Lo que está bien (EXCELENTE)
+Sistema de Topic Clusters completo con guías, comparativas, FAQs y páginas pilar.
+SEO Programático generando landing pages por marca/modelo/ciudad.
+Más de 15 preguntas pilares con contenido profundo y original.
+FAQs por marca (Audi, VW, SEAT/CUPRA, Škoda).
+Motor de auto-generación FAQ desde WhatsApp con publicación automática.
+Páginas de servicio dedicadas: diagnóstico, electrificación, coste-fiscalidad, conductores, postventa.
+Control de contenido thin para evitar penalizaciones en páginas programáticas.
+Problemas detectados
+Problema	Severidad	Detalle
+Falta blog/noticias del sector	MEDIO	No hay sección de actualidad/blog para captar tráfico informacional recurrente
+FAQs auto-generadas podrían ser thin	MEDIO	Las respuestas generadas automáticamente deben revisarse para asegurar profundidad y valor
+11. SEO PARA INTELIGENCIA ARTIFICIAL
+Lo que está bien (PIONERO)
+llms.txt con información estructurada del negocio, servicios, y URLs.
+ai-index.json con catálogo completo de contenidos para crawlers de IA.
+robots.txt optimizado para IA: GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, anthropic-ai, Applebot.
+Header <link rel="llms"> y <link rel="ai-index"> en el <head>.
+Problemas detectados
+Problema	Severidad	Detalle
+URLs en llms.txt usan grupoavisa.com	ALTO	Deben usar el dominio canónico real
+llms.txt no se actualiza automáticamente	MEDIO	Tiene fecha fija 2025-06-13, debería regenerarse con los cambios de contenido
+12. IMÁGENES
+Lo que está bien
+OptimizedImage con IntersectionObserver para lazy loading inteligente.
+Conversión automática a WebP vía API.
+Soporte de priority loading para imágenes LCP (hero).
+Alt text requerido como prop del componente.
+Dimensiones explícitas para evitar CLS (Cumulative Layout Shift).
+Problemas detectados
+Problema	Severidad	Detalle
+Páginas legacy usan <img> directo	MEDIO	Algunas páginas de marca estáticas no usan OptimizedImage
+No hay AVIF como formato alternativo	BAJO	WebP es suficiente, pero AVIF ofrece 20-30% más compresión
+Falta og-image.jpg verificable	MEDIO	Se referencia pero debe confirmarse que existe y tiene las dimensiones correctas (1200x630)
+13. INTERNACIONALIZACIÓN
+Estado actual
+Sitio monolingüe en español (es_ES).
+No hay hreflang tags (correcto si no hay versiones en otros idiomas).
+i18next está instalado pero solo se usa para español.
+La tabla slugs tiene columna locale preparada para futuro multiidioma.
+Recomendación
+Si el sitio opera solo en España, no se necesita hreflang. La infraestructura está preparada para expansión.
+
+PLAN DE ACCIÓN PRIORIZADO
+URGENTE (hacer esta semana)
+Unificar dominio — Decidir entre avisa.es y grupoavisa.com. Actualizar TODOS los archivos (index.html, seo-engine, seo-service, useSEO, llms.txt, ai-index.json, schemas).
+Corregir teléfono en Schema.org — Cambiar +34-XXX-XXX-XXX por +34955034600.
+Corregir email en Schema.org — Cambiar info@grupoavisa.com por flotas@grupoavisa.com.
+Verificar/eliminar aggregateRating — Si no hay reseñas reales verificables, eliminar para evitar penalización.
+IMPORTANTE (hacer este mes)
+Completar dirección física — Poner calle y número real en Schema LocalBusiness.
+Crear favicon y apple-touch-icon reales — Reemplazar vite.svg por el logo de Avisa.
+Regenerar llms.txt dinámicamente — Con el dominio correcto y fecha actualizada.
+Servir sitemaps como XML estático — Generar archivos físicos en build o servir desde endpoint con Content-Type: application/xml, no como componente React.
+Rellenar sameAs — Añadir Google Business Profile, LinkedIn, y otros perfiles sociales.
+Bloquear /admin/* en robots.txt — Disallow: /admin/.
+DESEABLE (próximo trimestre)
+Generar imágenes OG específicas por marca/servicio (no usar la genérica para todo).
+Actualizar last-modified dinámicamente.
+Considerar SSR/SSG para mejorar FCP y garantizar renderizado para todos los bots.
+Sección blog/noticias para tráfico informacional recurrente.
+Auditar FAQs auto-generadas periódicamente para asegurar calidad.
+RESUMEN FINAL
+Fortalezas del proyecto:
+
+Motor SEO programático muy avanzado (topic clusters, landing pages automáticas, control de indexación inteligente)
+Preparación pionera para IA (llms.txt, ai-index.json, robots.txt para bots de IA)
+Sistema de sitemaps dinámico con ping automático
+Schema.org completo y multi-tipo
+Redirecciones 301 automáticas para contenido discontinuado
+Accesibilidad bien implementada
+Debilidades principales:
+
+Incoherencia de dominio grupoavisa.com / avisa.es (invalida canónicas y schemas)
+Datos de contacto placeholder en Schema.org
+SPA sin SSR dificulta crawling de bots que no ejecutan JavaScript
+Sitemaps dependen de renderizado JavaScript
+Conclusión: La infraestructura SEO es de las más completas que he visto en un proyecto de este tipo. Los problemas son todos corregibles y la mayoría se resuelven en una sesión de trabajo. Una vez corregida la incoherencia de dominio y los datos de Schema, el sitio tiene todo lo necesario para posicionar muy bien en búsquedas locales y de nicho.

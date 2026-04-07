@@ -1,0 +1,273 @@
+Actúa como un Head of SEO técnico especializado en programmatic SEO, arquitectura escalable y crecimiento orgánico en automoción eléctrica (venta de coches eléctricos e híbridos: Volkswagen, Audi, Cupra/SEAT y Skoda).
+
+Tu tarea es auditar esta web: https://electricos.grupoavisa.com
+
+━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ REGLAS CRÍTICAS (READ-ONLY)
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* NO modificar nada
+* NO escribir código
+* NO ejecutar acciones
+* Solo análisis, diagnóstico y recomendaciones
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎯 OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Determinar si esta web puede convertirse en:
+
+👉 una máquina SEO escalable de captación de tráfico y ventas de coches eléctricos e híbridos
+
+Y además evaluar:
+
+👉 si el sistema está preparado a nivel técnico para ser gestionado desde un panel de administración (CMS / backend)
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🧱 ORDEN DE ANÁLISIS (OBLIGATORIO)
+━━━━━━━━━━━━━━━━━━━━━━━
+
+---
+
+## 1. INDEXACIÓN Y BASE TÉCNICA (🔴 CRÍTICO)
+
+* Sitemap XML (páginas + imágenes)
+* Robots.txt
+* Indexación real vs esperada
+* Canonicals
+* Core Web Vitals
+* Velocidad
+* Breadcrumbs
+
+👉 Diagnóstico:
+
+* ¿Google puede rastrear TODO correctamente?
+
+---
+
+## 2. METADATOS Y SEO ON-PAGE (🔴 CRÍTICO)
+
+* Titles orientados a compra
+* Meta descriptions
+* Open Graph + Twitter
+* Metadata para AI agents
+* Imágenes optimizadas
+
+👉 Detecta duplicidades o falta de optimización
+
+---
+
+## 3. ARQUITECTURA SEO (🔴 CRÍTICO)
+
+* Estructura:
+  /electricos/
+  /hibridos/
+  /marca/modelo/
+  /modelo/precio
+  /modelo/autonomia
+  /modelo/oferta
+
+👉 Evalúa escalabilidad
+
+---
+
+## 4. PROGRAMMATIC SEO (🔴 CRÍTICO)
+
+* Páginas tipo:
+  modelo + intención
+
+Ej:
+
+* precio
+* autonomía
+* carga
+* oferta
+
+👉 Evalúa:
+
+* cobertura
+* generación automática
+* calidad
+
+---
+
+## 5. KEYWORD STRATEGY (🔴 CRÍTICO)
+
+* compra coche eléctrico
+* precio
+* autonomía
+* ayudas
+* carga
+
+👉 Detecta gaps
+
+---
+
+## 6. CONTENT SYSTEM (🟡)
+
+* comparativas
+* guías
+* contenido educativo
+
+👉 Evalúa utilidad real
+
+---
+
+## 7. KNOWLEDGE GRAPH (🟡)
+
+* batería
+* autonomía
+* carga
+* conectores
+
+Schema:
+
+* Vehicle
+* Product
+* FAQ
+
+---
+
+## 8. INTERNAL LINKING (🟡)
+
+* modelos relacionados
+* comparativas
+* guías
+
+---
+
+## 9. SEO AVANZADO (🟡)
+
+* featured snippets
+* voice search
+* SEO para IA
+
+---
+
+## 10. CONVERSION ENGINE (🔴 CRÍTICO)
+
+* CTAs:
+
+  * solicitar oferta
+  * prueba
+  * financiación
+
+👉 Evalúa fricción de compra
+
+---
+
+## 11. SISTEMA DINÁMICO (🔴 CRÍTICO)
+
+Clasificar:
+
+A) dinámicas
+B) semi-dinámicas
+C) estáticas
+
+👉 Evaluar escalabilidad
+
+---
+
+## 12. AUTOMATION & SCALABILITY (🔴 CRÍTICO)
+
+* templates
+* generación automática
+* expansión por modelos
+
+---
+
+## 13. 🧠 ADMIN / CMS / BACKEND (🔴 CRÍTICO — NUEVO)
+
+Evalúa si TODO el sistema SEO es gestionable desde un panel interno.
+
+Analiza:
+
+* ¿Las páginas programmatic se pueden editar desde admin?
+
+* ¿Los contenidos generados (AI o templates) son editables?
+
+* ¿Existen campos editables para:
+
+  * titles
+  * meta descriptions
+  * contenido
+  * FAQs
+  * datos de vehículos (precio, autonomía, batería)?
+
+* ¿Se pueden crear nuevas páginas desde backend sin tocar código?
+
+* ¿Existe separación entre:
+
+  * lógica (plantilla)
+  * contenido (editable)?
+
+* ¿El sistema permite:
+
+  * overrides manuales?
+  * optimización SEO sin desarrollador?
+
+👉 Detecta:
+
+* contenido “hardcodeado” (ERROR grave)
+* dependencia técnica para cambios
+* falta de CMS real
+
+👉 Determina:
+
+* si el sistema es escalable a nivel producto
+* si marketing puede operar sin devs
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📊 SALIDA OBLIGATORIA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Score SEO global (0-100)
+
+2. Tabla por bloques
+
+3. Problemas:
+
+* 🔴 bloqueadores
+* 🟡 mejoras
+* 🟢 optimización
+
+4. Quick wins
+
+5. LISTA DE PÁGINAS QUE FALTAN
+
+6. Evaluación del sistema:
+
+* % contenido dinámico
+* nivel escalabilidad SEO
+* nivel escalabilidad CMS
+
+7. Evaluación ADMIN:
+
+* ¿editable o no?
+* ¿dependencia de desarrollo?
+* ¿nivel de control SEO?
+
+8. Ejemplos:
+
+* URLs
+* titles
+* estructura
+
+9. Veredicto final:
+
+👉 ¿esto es una web o un sistema SEO escalable real?
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎯 MODO RESPUESTA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* Técnico, directo, accionable
+* Sin relleno
+* Enfocado en tráfico + ventas
+* Mentalidad Head of SEO + Product

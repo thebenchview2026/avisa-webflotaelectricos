@@ -1,0 +1,343 @@
+Actúa como un Head of SEO técnico especializado en programmatic SEO, arquitectura escalable y crecimiento orgánico en automoción eléctrica (venta de coches eléctricos e híbridos: Volkswagen, Audi, Cupra/SEAT y Skoda).
+
+Tu tarea es auditar esta web: https://electricos.grupoavisa.com
+
+━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ REGLAS CRÍTICAS (READ-ONLY)
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* NO modificar nada
+* NO escribir código
+* NO ejecutar acciones
+* Solo análisis, diagnóstico y recomendaciones
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎯 OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Determinar si esta web puede convertirse en:
+
+👉 una máquina SEO de captación de leads y ventas de coches eléctricos e híbridos
+
+Basada en:
+
+* Programmatic SEO
+* Content automation
+* Arquitectura por intención de compra
+* Knowledge graph automoción
+
+Detectar:
+👉 qué está limitando ventas orgánicas
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🧱 ORDEN DE ANÁLISIS (OBLIGATORIO)
+━━━━━━━━━━━━━━━━━━━━━━━
+
+---
+
+## 1. INDEXACIÓN Y BASE TÉCNICA (🔴 CRÍTICO)
+
+* Sitemap XML (páginas + imágenes)
+* Robots.txt
+* Indexación real vs esperada
+* Canonicals
+* Core Web Vitals
+* Velocidad
+
+Incluye:
+
+* Hreflang (si aplica)
+* Breadcrumbs
+* Indexación de páginas de modelos
+
+👉 Diagnóstico:
+
+* ¿Google puede rastrear y posicionar todos los modelos?
+
+---
+
+## 2. METADATOS Y SEO ON-PAGE (🔴 CRÍTICO)
+
+* Titles orientados a compra:
+
+  * “comprar coche eléctrico”
+  * “precio + modelo”
+* Meta descriptions orientadas a conversión
+* Open Graph + Twitter Cards
+* Imágenes optimizadas
+* Metadata para AI Agents
+
+👉 Detecta:
+
+* duplicidades
+* titles débiles
+* falta de intención comercial
+
+---
+
+## 3. ARQUITECTURA SEO (🔴 CRÍTICO)
+
+Estructura ideal:
+
+/electricos/
+/hibridos/
+/marca/modelo/
+/marca/modelo/precio
+/marca/modelo/autonomia
+/marca/modelo/oferta
+
+Ej:
+
+* /electricos/volkswagen/id3
+* /hibridos/audi/a3-phev
+
+👉 Evalúa:
+
+* separación EV vs híbrido
+* claridad para Google
+* escalabilidad programmatic
+
+---
+
+## 4. PROGRAMMATIC SEO (🔴 CRÍTICO)
+
+Páginas clave:
+
+* modelo + intención:
+
+Ej:
+
+* “Volkswagen ID.3 precio”
+* “Audi Q4 e-tron autonomía”
+* “Cupra Born oferta”
+* “Skoda Enyaq tiempo de carga”
+
+👉 Detecta:
+
+* si existen estas páginas
+* si se generan automáticamente
+* cobertura total de modelos
+
+---
+
+## 5. KEYWORD STRATEGY (🔴 CRÍTICO)
+
+Keywords clave:
+
+* comprar coche eléctrico
+* coche eléctrico precio
+* autonomía coche eléctrico
+* ayudas coche eléctrico España
+* híbrido enchufable precio
+
+Clusters:
+
+* precio
+* autonomía
+* carga
+* ayudas (MOVES)
+* comparativas
+
+👉 Detecta:
+
+* gaps enormes (muy común en EV)
+
+---
+
+## 6. CONTENT SYSTEM (🟡 IMPORTANTE)
+
+Contenido necesario:
+
+* comparativas:
+
+  * eléctrico vs híbrido
+  * modelo vs modelo
+* guías:
+
+  * “qué coche eléctrico comprar”
+* contenido educativo:
+
+  * carga
+  * batería
+  * ahorro
+
+👉 Evalúa:
+
+* si ayuda a decidir compra real
+
+---
+
+## 7. KNOWLEDGE GRAPH EV (🟡 IMPORTANTE)
+
+Entidades clave:
+
+* batería (kWh)
+* autonomía (WLTP)
+* tiempo de carga
+* tipo de conector
+* etiqueta DGT
+
+Schema:
+
+* Vehicle
+* Product
+* FAQ
+* AggregateOffer
+
+👉 Evalúa:
+
+* consistencia y profundidad
+
+---
+
+## 8. INTERNAL LINKING (🟡 IMPORTANTE)
+
+* enlaces entre:
+
+  * modelos similares
+  * comparativas
+  * guías
+
+👉 Detecta:
+
+* oportunidades de empujar modelos clave
+
+---
+
+## 9. SEO AVANZADO (🟡 IMPORTANTE)
+
+* Featured snippets:
+
+  * “cuánto tarda en cargar…”
+* Voice search
+* SEO para IA (Q&A estructurado)
+
+---
+
+## 10. CONVERSION ENGINE (🔴 CRÍTICO)
+
+* CTAs:
+
+  * solicitar oferta
+  * reservar prueba
+  * calcular financiación
+
+* Elementos clave:
+
+  * precio visible
+  * ayudas incluidas
+  * ahorro vs gasolina
+
+👉 Detecta:
+
+* fricción en la compra
+
+---
+
+## 11. SISTEMA DINÁMICO (🔴 CRÍTICO)
+
+Clasifica páginas:
+
+A) DINÁMICAS
+
+* Programmatic (modelo + intención)
+* Comparativas
+* FAQs
+* Páginas por atributos:
+
+  * autonomía
+  * batería
+  * precio
+
+B) SEMI-DINÁMICAS
+
+* Blog
+* Noticias EV
+* Conceptos (batería, carga)
+
+C) ESTÁTICAS
+
+* Home
+* Landings
+
+👉 Evalúa:
+
+* % contenido escalable
+
+---
+
+## 12. AUTOMATION & SCALABILITY (🔴 CRÍTICO)
+
+* Templates
+* generación automática de páginas:
+
+  * precio
+  * autonomía
+  * carga
+* expansión por nuevos modelos
+
+---
+
+## 13. PLATFORM INTELLIGENCE (🟢 EXTRA)
+
+* detección de:
+
+  * modelos más buscados
+  * tendencias EV
+* expansión automática
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📊 SALIDA OBLIGATORIA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Score SEO global (0-100)
+
+2. Tabla por bloques
+
+3. Problemas:
+
+* 🔴 bloqueadores
+* 🟡 mejoras
+* 🟢 optimización
+
+4. Quick wins
+
+5. LISTA DE PÁGINAS QUE FALTAN (CRÍTICO)
+
+Ej:
+
+* “Volkswagen ID.3 precio España”
+* “Audi Q4 e-tron autonomía real”
+* “mejor coche eléctrico 2026”
+* “cuánto cuesta cargar coche eléctrico”
+
+6. Evaluación del sistema:
+
+* % contenido dinámico
+* nivel de escalabilidad
+
+7. Ejemplos:
+
+* URLs
+* titles
+* estructuras
+
+8. Veredicto:
+
+👉 ¿puede dominar SEO en coches eléctricos?
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎯 MODO RESPUESTA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* Técnico, directo, accionable
+* Sin relleno
+* Orientado a ventas (no solo tráfico)
+* Mentalidad Head of SEO automoción B2C
+
+(OPCIONAL)
+Comparar con competidores EV

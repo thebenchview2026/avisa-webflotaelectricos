@@ -1,0 +1,968 @@
+LeadSpark - Payloads por Formulario
+Endpoint: POST https://leadspark.grupoavisa.com/api/leads Content-Type: application/json Todos los formularios de grupoavisa.com envian exclusivamente a este endpoint.
+
+Para webs externas de otros proveedores: añadir grupoavisa_471_lead@ew5.es como BCC permanente.
+
+F01 - Contacto (LeadForm)
+Ubicacion: /contacto formName: Contacto (LeadForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Contacto (LeadForm)",
+  "client": {
+    "name": "Juan García López",
+    "phone": "+34 600 123 456",
+    "email": "juan@empresa.com",
+    "company": "Transportes García SL",
+    "cif": null,
+    "fleetSize": "6-20"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/contacto"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Contacto (LeadForm)",
+      "pageType": "contact"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Necesito información sobre renting para 10 vehículos | Empresa: Transportes García SL | Tamaño flota: 6-20 | Tipo consulta: Renting | Lead desde web | form=Contacto (LeadForm) | url=https://grupoavisa.com/contacto | page_type=contact",
+    "leadType": "Sales"
+  }
+}
+F02 - Contacto Rapido (LeadForm)
+Ubicacion: Paginas de marca dinamicas, CTAs laterales formName: Contacto Rápido (LeadForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Contacto Rápido (LeadForm)",
+  "client": {
+    "name": "María López",
+    "phone": "+34 611 222 333",
+    "email": "maria@miempresa.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "Golf",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/volkswagen"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Contacto Rápido (LeadForm)",
+      "pageType": "brand"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Lead desde web | form=Contacto Rápido (LeadForm) | url=https://grupoavisa.com/marcas/volkswagen | page_type=brand | brand=Volkswagen | model=Golf",
+    "leadType": "Sales"
+  }
+}
+F03 - SEO Programatico (LeadForm)
+Ubicacion: Paginas SEO programaticas (/renting-{marca}-{modelo}-{ciudad}) formName: SEO Programático (LeadForm)
+
+{
+  "version": "1.0.0",
+  "formName": "SEO Programático (LeadForm)",
+  "client": {
+    "name": "Pedro Martín",
+    "phone": "+34 622 333 444",
+    "email": "pedro@logistica.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "A3 Sportback 35 TFSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/renting-audi-a3-sevilla"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "SEO Programático (LeadForm)",
+      "pageType": "seo_programmatic"
+    },
+    "dealerLocation": "Sevilla",
+    "adCampaignName": "google_ads_renting",
+    "comment": "Me interesa el renting del A3 | Lead desde web | form=SEO Programático (LeadForm) | url=https://grupoavisa.com/renting-audi-a3-sevilla | page_type=seo_programmatic | brand=Audi | model=A3 Sportback 35 TFSI | city=Sevilla | utm_source=google | utm_campaign=google_ads_renting",
+    "leadType": "Sales"
+  }
+}
+F04 - Sidebar Te Llamamos (LeadForm)
+Ubicacion: Sidebar en paginas de contenido, FAQ, articulos formName: Sidebar Te Llamamos (LeadForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Sidebar Te Llamamos (LeadForm)",
+  "client": {
+    "name": "Ana Fernández",
+    "phone": "+34 633 444 555",
+    "email": ""
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/preguntas/renting-vs-compra-flotas"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Sidebar Te Llamamos (LeadForm)",
+      "pageType": "faq"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Lead desde web | form=Sidebar Te Llamamos (LeadForm) | url=https://grupoavisa.com/preguntas/renting-vs-compra-flotas | page_type=faq",
+    "leadType": "Sales"
+  }
+}
+F05 - Modal Presupuesto (LeadForm)
+Ubicacion: Modal emergente desde CTAs formName: Modal Presupuesto (LeadForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Modal Presupuesto (LeadForm)",
+  "client": {
+    "name": "Carlos Ruiz",
+    "phone": "+34 644 555 666",
+    "email": "carlos@ruizsl.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Škoda",
+      "model": "Karoq",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/skoda/promociones/skoda-karoq-1-5-tsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Modal Presupuesto (LeadForm)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Quiero presupuesto | Lead desde web | form=Modal Presupuesto (LeadForm) | url=https://grupoavisa.com/marcas/skoda/promociones/skoda-karoq-1-5-tsi | page_type=promotion | brand=Škoda | model=Karoq",
+    "leadType": "Sales"
+  }
+}
+F06 - Smart 2 Pasos (SmartLeadForm)
+Ubicacion: Paginas de preguntas/articulos (16 paginas) formName: Smart 2 Pasos (SmartLeadForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Smart 2 Pasos (SmartLeadForm)",
+  "client": {
+    "name": "Laura Sánchez",
+    "phone": "+34 655 666 777",
+    "email": "laura@transportes.es",
+    "company": "Transportes Sánchez",
+    "fleetSize": "21-50"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/preguntas/renting-vs-compra-flotas"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Smart 2 Pasos (SmartLeadForm)",
+      "pageType": "faq"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Renting empresa | Empresa: Transportes Sánchez | Tamaño flota: 21-50 | Lead desde web | form=Smart 2 Pasos (SmartLeadForm) | url=https://grupoavisa.com/preguntas/renting-vs-compra-flotas | page_type=faq",
+    "leadType": "Sales"
+  }
+}
+F07 - Home Contacto (ContactSection)
+Ubicacion: / (seccion de contacto del home) formName: Home Contacto (ContactSection)
+
+{
+  "version": "1.0.0",
+  "formName": "Home Contacto (ContactSection)",
+  "client": {
+    "name": "Miguel Torres",
+    "phone": "+34 666 777 888",
+    "email": "miguel@torreslogistica.com",
+    "company": "Torres Logística",
+    "fleetSize": "10-20"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Home Contacto (ContactSection)",
+      "pageType": "home"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Quiero renovar la flota de 15 vehiculos | Empresa: Torres Logística | Tamaño flota: 10-20 | Lead desde web | form=Home Contacto (ContactSection) | url=https://grupoavisa.com/ | page_type=home",
+    "leadType": "Sales"
+  }
+}
+F08 - Contacto (ContactoPage)
+Ubicacion: /contacto formName: Contacto (ContactoPage)
+
+{
+  "version": "1.0.0",
+  "formName": "Contacto (ContactoPage)",
+  "client": {
+    "name": "Isabel Moreno",
+    "phone": "+34 677 888 999",
+    "email": "isabel@morenoyasociados.com",
+    "company": "Moreno y Asociados SL",
+    "fleetSize": "6-20"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/contacto"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Contacto (ContactoPage)",
+      "pageType": "contact"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Necesito presupuesto para 8 vehiculos comerciales | Empresa: Moreno y Asociados SL | Tamaño flota: 6-20 | Tipo consulta: Renting | Lead desde web | form=Contacto (ContactoPage) | url=https://grupoavisa.com/contacto | page_type=contact",
+    "leadType": "Sales"
+  }
+}
+F09 - Diagnostico de Flota (DiagnosticoForm)
+Ubicacion: /diagnostico formName: Diagnóstico de Flota (DiagnosticoForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Diagnóstico de Flota (DiagnosticoForm)",
+  "client": {
+    "name": "Empresa Logística del Sur",
+    "phone": "+34 688 999 000",
+    "email": "flota@logisticasur.es",
+    "company": "Empresa Logística del Sur",
+    "cif": "B41123456",
+    "fleetSize": "21-50"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/diagnostico"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Diagnóstico de Flota (DiagnosticoForm)",
+      "pageType": "diagnostico"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Diagnóstico de flota | Tipo: Turismo | Km medios: 20000-30000 | Sistema actual: Compra | Preocupación: Costes mantenimiento | Renovación: 6-12 meses | Resultado: alta (78/100) | Empresa: Empresa Logística del Sur | CIF: B41123456 | Tamaño flota: 21-50 | Lead desde web | form=Diagnóstico de Flota (DiagnosticoForm) | url=https://grupoavisa.com/diagnostico | page_type=diagnostico",
+    "leadType": "Sales"
+  }
+}
+F09b - Diagnostico de Flota MultiStep (DiagnosticoFormMultiStep)
+Ubicacion: /diagnostico (version multi-paso) formName: Diagnóstico de Flota MultiStep (DiagnosticoFormMultiStep)
+
+{
+  "version": "1.0.0",
+  "formName": "Diagnóstico de Flota MultiStep (DiagnosticoFormMultiStep)",
+  "client": {
+    "name": "director@empresagrande.com",
+    "phone": "",
+    "email": "director@empresagrande.com",
+    "fleetSize": "51-100"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/diagnostico"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Diagnóstico de Flota MultiStep (DiagnosticoFormMultiStep)",
+      "pageType": "diagnostico"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Diagnóstico de flota (multi-step) | Tipo: Furgoneta | Km medios: 30000-50000 | Sistema actual: Leasing | Preocupación: Renovación flota | Renovación: Menos de 6 meses | Resultado: alta (85/100) | Tamaño flota: 51-100 | Lead desde web | form=Diagnóstico de Flota MultiStep (DiagnosticoFormMultiStep) | url=https://grupoavisa.com/diagnostico | page_type=diagnostico",
+    "leadType": "Sales"
+  }
+}
+F10 - Postventa (PostventaPage)
+Ubicacion: /postventa formName: Postventa (PostventaPage)
+
+{
+  "version": "1.0.0",
+  "formName": "Postventa (PostventaPage)",
+  "client": {
+    "name": "Roberto Jiménez",
+    "phone": "+34 699 000 111",
+    "email": "roberto@jimenezsl.com",
+    "company": "Jiménez Distribuciones SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "Caddy",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/postventa"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Postventa (PostventaPage)",
+      "pageType": "postventa"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Servicio: Revisión programada | Nº vehículos: 5 | Fecha: 2026-04-15 10:00 | Necesito cita para revisión de 5 furgonetas | Empresa: Jiménez Distribuciones SL | Matrícula: 1234ABC | Lead desde web | form=Postventa (PostventaPage) | url=https://grupoavisa.com/postventa | page_type=postventa",
+    "leadType": "Sales"
+  }
+}
+F11 - Promocion Audi A3 Sportback 35 TFSI
+Ubicacion: /marcas/audi/promociones/audi-a3-sportback-35-tfsi formName: Promoción Vehículo (Audi A3 Sportback 35 TFSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Audi A3 Sportback 35 TFSI)",
+  "client": {
+    "name": "Elena Castro",
+    "phone": "+34 611 222 333",
+    "email": "elena@castrosa.com",
+    "company": "Castro SA"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "A3 Sportback 35 TFSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/audi/promociones/audi-a3-sportback-35-tfsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Audi A3 Sportback 35 TFSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Audi A3 Sportback 35 TFSI | Empresa: Castro SA | Lead desde web | form=Promoción Vehículo (Audi A3 Sportback 35 TFSI) | url=https://grupoavisa.com/marcas/audi/promociones/audi-a3-sportback-35-tfsi | page_type=promotion | brand=Audi | model=A3 Sportback 35 TFSI",
+    "leadType": "Sales"
+  }
+}
+F12 - Promocion Audi A4 Avant 40 TDI
+Ubicacion: /marcas/audi/promociones/audi-a4-avant-40-tdi formName: Promoción Vehículo (Audi A4 Avant 40 TDI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Audi A4 Avant 40 TDI)",
+  "client": {
+    "name": "Fernando Díaz",
+    "phone": "+34 622 333 444",
+    "email": "fernando@diazlogistica.com",
+    "company": "Díaz Logística"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "A4 Avant 40 TDI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/audi/promociones/audi-a4-avant-40-tdi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Audi A4 Avant 40 TDI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Audi A4 Avant 40 TDI | Empresa: Díaz Logística | Lead desde web | form=Promoción Vehículo (Audi A4 Avant 40 TDI) | url=https://grupoavisa.com/marcas/audi/promociones/audi-a4-avant-40-tdi | page_type=promotion | brand=Audi | model=A4 Avant 40 TDI",
+    "leadType": "Sales"
+  }
+}
+F13 - Promocion Audi A6 Avant 40 TDI
+Ubicacion: /marcas/audi/promociones/audi-a6-avant-40-tdi formName: Promoción Vehículo (Audi A6 Avant 40 TDI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Audi A6 Avant 40 TDI)",
+  "client": {
+    "name": "Raquel Herrera",
+    "phone": "+34 633 444 555",
+    "email": "raquel@herrerasl.com",
+    "company": "Herrera SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "A6 Avant 40 TDI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/audi/promociones/audi-a6-avant-40-tdi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Audi A6 Avant 40 TDI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Audi A6 Avant 40 TDI | Empresa: Herrera SL | Lead desde web | form=Promoción Vehículo (Audi A6 Avant 40 TDI) | url=https://grupoavisa.com/marcas/audi/promociones/audi-a6-avant-40-tdi | page_type=promotion | brand=Audi | model=A6 Avant 40 TDI",
+    "leadType": "Sales"
+  }
+}
+F14 - Promocion Audi Q3 35 TFSI
+Ubicacion: /marcas/audi/promociones/audi-q3-35-tfsi formName: Promoción Vehículo (Audi Q3 35 TFSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Audi Q3 35 TFSI)",
+  "client": {
+    "name": "David Romero",
+    "phone": "+34 644 555 666",
+    "email": "david@romeroinmobiliaria.com",
+    "company": "Romero Inmobiliaria"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "Q3 35 TFSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/audi/promociones/audi-q3-35-tfsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Audi Q3 35 TFSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Audi Q3 35 TFSI | Empresa: Romero Inmobiliaria | Lead desde web | form=Promoción Vehículo (Audi Q3 35 TFSI) | url=https://grupoavisa.com/marcas/audi/promociones/audi-q3-35-tfsi | page_type=promotion | brand=Audi | model=Q3 35 TFSI",
+    "leadType": "Sales"
+  }
+}
+F15 - Promocion Audi Q5 40 TDI quattro
+Ubicacion: /marcas/audi/promociones/audi-q5-40-tdi-quattro formName: Promoción Vehículo (Audi Q5 40 TDI quattro)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Audi Q5 40 TDI quattro)",
+  "client": {
+    "name": "Patricia Vega",
+    "phone": "+34 655 666 777",
+    "email": "patricia@vegaconsulting.com",
+    "company": "Vega Consulting"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "Q5 40 TDI quattro",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/audi/promociones/audi-q5-40-tdi-quattro"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Audi Q5 40 TDI quattro)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Audi Q5 40 TDI quattro | Empresa: Vega Consulting | Lead desde web | form=Promoción Vehículo (Audi Q5 40 TDI quattro) | url=https://grupoavisa.com/marcas/audi/promociones/audi-q5-40-tdi-quattro | page_type=promotion | brand=Audi | model=Q5 40 TDI quattro",
+    "leadType": "Sales"
+  }
+}
+F16 - Promocion Audi e-tron 50 quattro
+Ubicacion: /marcas/audi/promociones/audi-e-tron-50-quattro formName: Promoción Vehículo (Audi e-tron 50 quattro)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Audi e-tron 50 quattro)",
+  "client": {
+    "name": "Andrés Molina",
+    "phone": "+34 666 777 888",
+    "email": "andres@molinagroup.es",
+    "company": "Molina Group"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "e-tron 50 quattro",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/audi/promociones/audi-e-tron-50-quattro"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Audi e-tron 50 quattro)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Audi e-tron 50 quattro | Empresa: Molina Group | Lead desde web | form=Promoción Vehículo (Audi e-tron 50 quattro) | url=https://grupoavisa.com/marcas/audi/promociones/audi-e-tron-50-quattro | page_type=promotion | brand=Audi | model=e-tron 50 quattro",
+    "leadType": "Sales"
+  }
+}
+F17 - Promocion Volkswagen Golf 1.5 eTSI
+Ubicacion: /marcas/volkswagen/promociones/volkswagen-golf-1-5-etsi formName: Promoción Vehículo (Volkswagen Golf 1.5 eTSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Volkswagen Golf 1.5 eTSI)",
+  "client": {
+    "name": "Sergio Navarro",
+    "phone": "+34 677 888 999",
+    "email": "sergio@navarrosl.com",
+    "company": "Navarro SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "Golf 1.5 eTSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-golf-1-5-etsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Volkswagen Golf 1.5 eTSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Volkswagen Golf 1.5 eTSI | Empresa: Navarro SL | Lead desde web | form=Promoción Vehículo (Volkswagen Golf 1.5 eTSI) | url=https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-golf-1-5-etsi | page_type=promotion | brand=Volkswagen | model=Golf 1.5 eTSI",
+    "leadType": "Sales"
+  }
+}
+F18 - Promocion Volkswagen Tiguan 2.0 TDI
+Ubicacion: /marcas/volkswagen/promociones/volkswagen-tiguan-2-0-tdi formName: Promoción Vehículo (Volkswagen Tiguan 2.0 TDI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Volkswagen Tiguan 2.0 TDI)",
+  "client": {
+    "name": "Carmen Ortiz",
+    "phone": "+34 688 999 000",
+    "email": "carmen@ortizlogistica.es",
+    "company": "Ortiz Logística"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "Tiguan 2.0 TDI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-tiguan-2-0-tdi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Volkswagen Tiguan 2.0 TDI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Volkswagen Tiguan 2.0 TDI | Empresa: Ortiz Logística | Lead desde web | form=Promoción Vehículo (Volkswagen Tiguan 2.0 TDI) | url=https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-tiguan-2-0-tdi | page_type=promotion | brand=Volkswagen | model=Tiguan 2.0 TDI",
+    "leadType": "Sales"
+  }
+}
+F19 - Promocion Volkswagen T-Cross 1.0 TSI
+Ubicacion: /marcas/volkswagen/promociones/volkswagen-t-cross-1-0-tsi formName: Promoción Vehículo (Volkswagen T-Cross 1.0 TSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Volkswagen T-Cross 1.0 TSI)",
+  "client": {
+    "name": "Luis Méndez",
+    "phone": "+34 699 000 111",
+    "email": "luis@mendezsa.com",
+    "company": "Méndez SA"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "T-Cross 1.0 TSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-t-cross-1-0-tsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Volkswagen T-Cross 1.0 TSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Volkswagen T-Cross 1.0 TSI | Empresa: Méndez SA | Lead desde web | form=Promoción Vehículo (Volkswagen T-Cross 1.0 TSI) | url=https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-t-cross-1-0-tsi | page_type=promotion | brand=Volkswagen | model=T-Cross 1.0 TSI",
+    "leadType": "Sales"
+  }
+}
+F20 - Promocion Volkswagen Passat Variant 2.0 TDI
+Ubicacion: /marcas/volkswagen/promociones/volkswagen-passat-variant-2-0-tdi formName: Promoción Vehículo (Volkswagen Passat Variant 2.0 TDI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Volkswagen Passat Variant 2.0 TDI)",
+  "client": {
+    "name": "Teresa Guzmán",
+    "phone": "+34 611 333 555",
+    "email": "teresa@guzmansl.com",
+    "company": "Guzmán SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "Passat Variant 2.0 TDI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-passat-variant-2-0-tdi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Volkswagen Passat Variant 2.0 TDI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Volkswagen Passat Variant 2.0 TDI | Empresa: Guzmán SL | Lead desde web | form=Promoción Vehículo (Volkswagen Passat Variant 2.0 TDI) | url=https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-passat-variant-2-0-tdi | page_type=promotion | brand=Volkswagen | model=Passat Variant 2.0 TDI",
+    "leadType": "Sales"
+  }
+}
+F21 - Promocion Volkswagen ID.4 Pro
+Ubicacion: /marcas/volkswagen/promociones/volkswagen-id-4-pro formName: Promoción Vehículo (Volkswagen ID.4 Pro)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Volkswagen ID.4 Pro)",
+  "client": {
+    "name": "Alberto Rivas",
+    "phone": "+34 622 444 666",
+    "email": "alberto@rivaselectric.es",
+    "company": "Rivas Electric"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "ID.4 Pro",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-id-4-pro"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Volkswagen ID.4 Pro)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Volkswagen ID.4 Pro | Empresa: Rivas Electric | Lead desde web | form=Promoción Vehículo (Volkswagen ID.4 Pro) | url=https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-id-4-pro | page_type=promotion | brand=Volkswagen | model=ID.4 Pro",
+    "leadType": "Sales"
+  }
+}
+F22 - Promocion SEAT Leon 1.5 eTSI
+Ubicacion: /marcas/seat-cupra/promociones/seat-leon-1-5-etsi formName: Promoción Vehículo (SEAT León 1.5 eTSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (SEAT León 1.5 eTSI)",
+  "client": {
+    "name": "Jorge Peña",
+    "phone": "+34 633 555 777",
+    "email": "jorge@penaconsulting.com",
+    "company": "Peña Consulting"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "SEAT/CUPRA",
+      "model": "León 1.5 eTSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/seat-cupra/promociones/seat-leon-1-5-etsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (SEAT León 1.5 eTSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre SEAT León 1.5 eTSI | Empresa: Peña Consulting | Lead desde web | form=Promoción Vehículo (SEAT León 1.5 eTSI) | url=https://grupoavisa.com/marcas/seat-cupra/promociones/seat-leon-1-5-etsi | page_type=promotion | brand=SEAT/CUPRA | model=León 1.5 eTSI",
+    "leadType": "Sales"
+  }
+}
+F23 - Promocion SEAT Ateca 1.5 TSI
+Ubicacion: /marcas/seat-cupra/promociones/seat-ateca-1-5-tsi formName: Promoción Vehículo (SEAT Ateca 1.5 TSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (SEAT Ateca 1.5 TSI)",
+  "client": {
+    "name": "Marta Iglesias",
+    "phone": "+34 644 666 888",
+    "email": "marta@iglesiassl.com",
+    "company": "Iglesias SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "SEAT/CUPRA",
+      "model": "Ateca 1.5 TSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/seat-cupra/promociones/seat-ateca-1-5-tsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (SEAT Ateca 1.5 TSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre SEAT Ateca 1.5 TSI | Empresa: Iglesias SL | Lead desde web | form=Promoción Vehículo (SEAT Ateca 1.5 TSI) | url=https://grupoavisa.com/marcas/seat-cupra/promociones/seat-ateca-1-5-tsi | page_type=promotion | brand=SEAT/CUPRA | model=Ateca 1.5 TSI",
+    "leadType": "Sales"
+  }
+}
+F24 - Promocion SEAT Arona 1.0 TSI
+Ubicacion: /marcas/seat-cupra/promociones/seat-arona-1-0-tsi formName: Promoción Vehículo (SEAT Arona 1.0 TSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (SEAT Arona 1.0 TSI)",
+  "client": {
+    "name": "Pablo Serrano",
+    "phone": "+34 655 777 999",
+    "email": "pablo@serranogroup.es",
+    "company": "Serrano Group"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "SEAT/CUPRA",
+      "model": "Arona 1.0 TSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/seat-cupra/promociones/seat-arona-1-0-tsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (SEAT Arona 1.0 TSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre SEAT Arona 1.0 TSI | Empresa: Serrano Group | Lead desde web | form=Promoción Vehículo (SEAT Arona 1.0 TSI) | url=https://grupoavisa.com/marcas/seat-cupra/promociones/seat-arona-1-0-tsi | page_type=promotion | brand=SEAT/CUPRA | model=Arona 1.0 TSI",
+    "leadType": "Sales"
+  }
+}
+F25 - Promocion CUPRA Formentor 1.5 eTSI
+Ubicacion: /marcas/seat-cupra/promociones/cupra-formentor-1-5-etsi formName: Promoción Vehículo (CUPRA Formentor 1.5 eTSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (CUPRA Formentor 1.5 eTSI)",
+  "client": {
+    "name": "Cristina Lara",
+    "phone": "+34 666 888 000",
+    "email": "cristina@larasl.com",
+    "company": "Lara SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "SEAT/CUPRA",
+      "model": "Formentor 1.5 eTSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/seat-cupra/promociones/cupra-formentor-1-5-etsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (CUPRA Formentor 1.5 eTSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre CUPRA Formentor 1.5 eTSI | Empresa: Lara SL | Lead desde web | form=Promoción Vehículo (CUPRA Formentor 1.5 eTSI) | url=https://grupoavisa.com/marcas/seat-cupra/promociones/cupra-formentor-1-5-etsi | page_type=promotion | brand=SEAT/CUPRA | model=Formentor 1.5 eTSI",
+    "leadType": "Sales"
+  }
+}
+F26 - Promocion CUPRA Born 58 kWh
+Ubicacion: /marcas/seat-cupra/promociones/cupra-born-58-kwh formName: Promoción Vehículo (CUPRA Born 58 kWh)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (CUPRA Born 58 kWh)",
+  "client": {
+    "name": "Antonio Campos",
+    "phone": "+34 677 999 111",
+    "email": "antonio@camposelectric.com",
+    "company": "Campos Electric"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "SEAT/CUPRA",
+      "model": "Born 58 kWh",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/seat-cupra/promociones/cupra-born-58-kwh"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (CUPRA Born 58 kWh)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre CUPRA Born 58 kWh | Empresa: Campos Electric | Lead desde web | form=Promoción Vehículo (CUPRA Born 58 kWh) | url=https://grupoavisa.com/marcas/seat-cupra/promociones/cupra-born-58-kwh | page_type=promotion | brand=SEAT/CUPRA | model=Born 58 kWh",
+    "leadType": "Sales"
+  }
+}
+F27 - Promocion Skoda Kamiq 1.0 TSI
+Ubicacion: /marcas/skoda/promociones/skoda-kamiq-1-0-tsi formName: Promoción Vehículo (Škoda Kamiq 1.0 TSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Škoda Kamiq 1.0 TSI)",
+  "client": {
+    "name": "Rosa Delgado",
+    "phone": "+34 688 000 222",
+    "email": "rosa@delgadosl.es",
+    "company": "Delgado SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Skoda",
+      "model": "Kamiq 1.0 TSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/skoda/promociones/skoda-kamiq-1-0-tsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Škoda Kamiq 1.0 TSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Škoda Kamiq 1.0 TSI | Empresa: Delgado SL | Lead desde web | form=Promoción Vehículo (Škoda Kamiq 1.0 TSI) | url=https://grupoavisa.com/marcas/skoda/promociones/skoda-kamiq-1-0-tsi | page_type=promotion | brand=Skoda | model=Kamiq 1.0 TSI",
+    "leadType": "Sales"
+  }
+}
+F28 - Promocion Skoda Karoq 1.5 TSI
+Ubicacion: /marcas/skoda/promociones/skoda-karoq-1-5-tsi formName: Promoción Vehículo (Škoda Karoq 1.5 TSI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Škoda Karoq 1.5 TSI)",
+  "client": {
+    "name": "Manuel Fuentes",
+    "phone": "+34 699 111 333",
+    "email": "manuel@fuentessl.com",
+    "company": "Fuentes SL"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Skoda",
+      "model": "Karoq 1.5 TSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/skoda/promociones/skoda-karoq-1-5-tsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Škoda Karoq 1.5 TSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Škoda Karoq 1.5 TSI | Empresa: Fuentes SL | Lead desde web | form=Promoción Vehículo (Škoda Karoq 1.5 TSI) | url=https://grupoavisa.com/marcas/skoda/promociones/skoda-karoq-1-5-tsi | page_type=promotion | brand=Skoda | model=Karoq 1.5 TSI",
+    "leadType": "Sales"
+  }
+}
+F29 - Promocion Skoda Enyaq iV 60
+Ubicacion: /marcas/skoda/promociones/skoda-enyaq-iv-60 formName: Promoción Vehículo (Škoda Enyaq iV 60)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Škoda Enyaq iV 60)",
+  "client": {
+    "name": "Lucía Prieto",
+    "phone": "+34 611 222 444",
+    "email": "lucia@prietogreen.es",
+    "company": "Prieto Green"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Skoda",
+      "model": "Enyaq iV 60",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/skoda/promociones/skoda-enyaq-iv-60"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Škoda Enyaq iV 60)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Škoda Enyaq iV 60 | Empresa: Prieto Green | Lead desde web | form=Promoción Vehículo (Škoda Enyaq iV 60) | url=https://grupoavisa.com/marcas/skoda/promociones/skoda-enyaq-iv-60 | page_type=promotion | brand=Skoda | model=Enyaq iV 60",
+    "leadType": "Sales"
+  }
+}
+F30 - Promocion Skoda Octavia Combi 2.0 TDI
+Ubicacion: /marcas/skoda/promociones/skoda-octavia-combi-2-0-tdi formName: Promoción Vehículo (Škoda Octavia Combi 2.0 TDI)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Škoda Octavia Combi 2.0 TDI)",
+  "client": {
+    "name": "Ricardo Blanco",
+    "phone": "+34 622 333 555",
+    "email": "ricardo@blancoservicios.com",
+    "company": "Blanco Servicios"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Skoda",
+      "model": "Octavia Combi 2.0 TDI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/skoda/promociones/skoda-octavia-combi-2-0-tdi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Škoda Octavia Combi 2.0 TDI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Škoda Octavia Combi 2.0 TDI | Empresa: Blanco Servicios | Lead desde web | form=Promoción Vehículo (Škoda Octavia Combi 2.0 TDI) | url=https://grupoavisa.com/marcas/skoda/promociones/skoda-octavia-combi-2-0-tdi | page_type=promotion | brand=Skoda | model=Octavia Combi 2.0 TDI",
+    "leadType": "Sales"
+  }
+}
+F31 - Promocion Dinamica (Page Builder)
+Ubicacion: /marcas/{marca}/promociones/{slug} (paginas dinamicas desde base de datos) formName: Promoción Vehículo ({Marca} {Modelo}) (se genera automaticamente segun el vehiculo)
+
+{
+  "version": "1.0.0",
+  "formName": "Promoción Vehículo (Volkswagen Taigo 1.0 TSI)",
+  "client": {
+    "name": "Sandra Reyes",
+    "phone": "+34 633 444 666",
+    "email": "sandra@reyeslogistica.es",
+    "company": "Reyes Logística"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "Taigo 1.0 TSI",
+      "vehicleType": "",
+      "url": "https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-taigo-1-0-tsi"
+    },
+    "origin": {
+      "source_detail": "Web Avisa",
+      "formName": "Promoción Vehículo (Volkswagen Taigo 1.0 TSI)",
+      "pageType": "promotion"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud de información sobre Volkswagen Taigo 1.0 TSI | Promoción: Renting Taigo desde 249€/mes | Cuota: 249€/mes | Empresa: Reyes Logística | Lead desde web | form=Promoción Vehículo (Volkswagen Taigo 1.0 TSI) | url=https://grupoavisa.com/marcas/volkswagen/promociones/volkswagen-taigo-1-0-tsi | page_type=promotion | brand=Volkswagen | model=Taigo 1.0 TSI",
+    "leadType": "Sales"
+  }
+}

@@ -1,0 +1,268 @@
+# AVISA-WebFlotaelectricos (Grupo Avisa)
+
+## Overview
+B2C electric and hybrid vehicle catalog for Grupo Avisa — official dealership group (Volkswagen, Audi, Škoda, SEAT, CUPRA) in Andalucía and Extremadura. Targets individual consumers buying electric/hybrid cars. Features vehicle catalog, Plan MOVES III subsidies, consumer financing (renting/leasing), home charging guides, after-sales service, dealer locations, and contact/lead generation. **Domain**: `electricos.grupoavisa.com`. Includes full admin CMS panel.
+
+**B2C Consumer Pages** (high-value commercial):
+- `/renting-coche-electrico` — renting for individuals
+- `/leasing-coche-electrico` — leasing with purchase option
+- `/punto-de-carga` — home charging guide (wallbox)
+- `/ayudas-moves3-vehiculo-electrico` — MOVES III subsidies for consumers
+
+**EV Attribute Pages**:
+- `/vehiculos/electricos/autonomia-mas-400km` — EVs with 400+ km range
+- `/vehiculos/electricos/carga-rapida-dc` — DC fast charging vehicles
+- `/vehiculos/hibridos/phev-enchufables` — PHEV plug-in hybrids
+- `/vehiculos/electricos/etiqueta-cero-dgt` — CERO label vehicles
+
+**Enterprise route redirects**: `/punto-carga-empresa` → `/punto-de-carga`, `/leasing-electrico-empresa` → `/leasing-coche-electrico`.
+
+## Architecture
+- **Frontend**: Next.js 14 App Router (SSR/SSG) + React + TailwindCSS
+- **Routing**: Next.js `app/` directory with file-based routing (replaces wouter)
+- **Backend**: Express.js custom server with REST API + session-based auth
+- **Database**: PostgreSQL via Drizzle ORM
+- **Icons**: RemixIcon (CDN)
+- **Fonts**: Inter + Playfair Display (Google Fonts, loaded in app/layout.tsx)
+- **Brand Color**: `#ad023b` (crimson red), secondary `#8d0230`, black header
+- **Auth**: express-session + connect-pg-simple + bcryptjs
+- **SSR**: All public pages server-rendered with Next.js metadata API for SEO
+- **Custom Server**: Express serves `/api/*` routes, Next.js handles all other requests
+- **Entity SEO**: Full JSON-LD entity graph with @id cross-references across Organization, WebSite, Brand (14 with Wikidata/Wikipedia sameAs), Service (5), WebPage (every page), FAQPage, BreadcrumbList, Car, and 8 dealer locations as departments. Shared data in `client/src/lib/entity-data.ts`.
+- **E-E-A-T Signals**: Reusable trust components in `client/src/components/EEATSignals.tsx` — TrustBar (6 stats), WhyChooseUs (6 reasons), WorkProcess (6 steps), TestimonialsSection (4 reviews), LocalCoverage (6 cities + contact), SpecialistAreas (6 EV specialties), ExpertiseBadges. All metrics sourced from `TRUST_METRICS` in `entity-data.ts` for consistency. Integrated in home, postventa, servicio-pilar, marca-detalle, servicio-marca pages.
+- **SEO Automation Engine**: Centralized module at `client/src/lib/seo-engine.ts` that auto-generates metadata (title, description, canonical, OG, Twitter, keywords), JSON-LD schemas (WebPage, Service, Car, Article, FAQPage, BreadcrumbList, LocalBusiness), internal links, and H1 for any dynamic page. Supports all page types: `service-brand`, `service-pillar`, `brand`, `city`, `vehicle-electric`, `vehicle-hybrid`, `editorial-hub`, `editorial-detail`, `faq-hub`, `faq-category`, `faq-detail`, `home`, `static`. Uses `SeoContext` interface with `pageType`, `brand`, `service`, `city`, `editorialType`, `article`, `vehicle`, `faq` fields. Title auto-clamped to 55 chars (70 with layout suffix), description to 155 chars. Exports: `generateMetadata()`, `generateJsonLd()`, `generateInternalLinks()`, `generateH1()`, `generateSeoBundle()`. All `app/` pages refactored to use the engine.
+- **Auto Internal Linking Engine**: Module at `client/src/lib/internal-linking.ts` that detects entity mentions in content and generates internal links automatically. Detects 5 entity types: brands (14 with aliases like VW→Volkswagen, Mercedes→Mercedes-Benz), services (5 with 30+ term aliases: reparación/avería/arreglo, diagnóstico/escáner, mantenimiento/revisión/ITV, carga/wallbox, garantía), cities (6 landing pages), concepts (eléctricos, híbridos, Plan MOVES, postventa, concesionarios, electrificación, batería HV, frenada regenerativa), editorial sections. Anti-saturation: max 3-5 links per section, entity deduplication, href deduplication, self-link exclusion, configurable `excludePaths`. Uses Unicode-safe word boundary patterns (not `\b`) for Škoda compatibility. Priority system: brands(10) > services(8) > cities(6) > concepts(5) > editorial(4), with `preferEntityTypes` for page-specific reordering. Exports: `detectEntities()`, `annotateText()`, `getRelatedPages()`, `buildSectionLinks()`, `generateLinkGraph()`. Component: `AutoInternalLinks.tsx` with 3 variants (inline/sidebar/footer grid). Integrated in servicio-marca, servicio-pilar, marca-detalle, editorial-detail pages. Admin API: `GET /api/admin/internal-link-graph` returns full graph (106 nodes, 169 edges).
+- **CTR-Optimized Metadata**: All 100+ pages have unique meta titles (≤70 chars with suffix) and descriptions (≤155 chars) auto-generated by SEO Engine following format `[Servicio/Intención] en [Ciudad] | Grupo Avisa`. Official brands (VW, Audi, Škoda) use "Taller Oficial"; others "Taller Especializado". Descriptions include CTA (Pide cita / Presupuesto sin compromiso). JSON-LD `name` fields aligned with metadata titles.
+- **Breadcrumbs**: Visible breadcrumb bar + standalone BreadcrumbList JSON-LD via `client/src/components/Breadcrumbs.tsx`. Rendered on all deep pages (postventa, marcas, servicios pillar+cluster, preguntas+categoría+detalle, concesionarios, promociones, electrificación, autoplus, conductores). Hierarchy: `Inicio > Marcas > [Brand]`, `Inicio > Servicios > [Service] > [Service Brand]`, `Inicio > Preguntas > [Categoría] > [Pregunta]`. Linked crumbs use RemixIcon separators. JSON-LD also embedded inside WebPage schemas for redundancy.
+- **FAQ SEO System (4-Layer Dynamic)**: Scalable FAQ architecture across 4 semantic layers per service-brand page: (1) Combined service+brand FAQs, (2) Service-only FAQs (4 per service), (3) Brand-only FAQs (2-3 per brand, all 14), (4) General EV FAQs (6). Engine at `client/src/lib/faq-engine.ts` with `getMultiLayerFaqs(serviceSlug, brandSlug)` returning `{ sections, allFaqs }` — sections for UI rendering, allFaqs for JSON-LD. Cross-layer deduplication by normalized question text. Component `InlineFAQSection.tsx` supports `sections?: FAQSection[]` prop for N accordion groups (backward compatible with legacy `faqs`/`secondaryFaqs` props). `servicio-marca.tsx` passes 5 sections (unique technical + 4 layers). `app/servicios/[slug]/page.tsx` `ServiceBrandJsonLd` includes ALL deduplicated FAQs from multi-layer + uniqueContent in FAQPage JSON-LD (~20 questions per page). Also: global (`/preguntas` DB-driven), brand pillar (14 pages), service pillar (5 pages). Each FAQ section includes "Preguntas relacionadas" with 6 internal links. All answers rendered SSR via `sr-only` pattern. FAQPage JSON-LD matches rendered content.
+- **Local SEO**: 6 city landing pages (`/taller-electricos-[ciudad]` via Express rewrite to `/talleres/[ciudad]`): Sevilla, Dos Hermanas, Huelva, Córdoba, Badajoz, Cáceres. Each with LocalBusiness+AutoRepair JSON-LD, GeoCircle areaServed, dealer cards, service listings, nearby areas. `ServiceAreaCoverage` component on marca-detalle, servicio-pilar pages (6-city grid with links). Geographic keywords reinforced: "en Sevilla" in all H1s (marca-detalle, servicio-pilar, servicio-marca). Geo meta tags in layout (geo.region ES-AN, geo.position, ICBM). Global JSON-LD enhanced with City-level areaServed entries + GeoCircle. Data in `client/src/lib/local-seo.ts`.
+- **Programmatic SEO (Local Services)**: 420 pages at `/servicios/{service}-{brand}-{city}` (5 services × 14 brands × 6 cities). Content generator at `client/src/lib/programmatic-seo.ts` with seed-based hash selection for varied H1s, intros, service sections, brand sections, common EV problems, process steps (5-6 steps per service), FAQs (4 per page), and CTAs. Page component `client/src/pages/servicio-local.tsx` with 8 content sections + city/brand/service cross-links + nearby areas + AutoInternalLinks. Route integrated in `app/servicios/[slug]/page.tsx` with `isProgrammaticSlug()` check (tri-combo slugs parsed before service-brand check). Full JSON-LD: WebPage, Service (with City areaServed), FAQPage. Titles ≤55 chars (layout adds ` | Grupo Avisa`). Sitemap: `sitemap-local-services.xml` (420 URLs, priority 0.5). Slug format: `{service}-{brand}-{city}` parsed by `parseProgrammaticSlug()` with all constants from shared source.
+- **Dynamic Sitemap System**: Fully autonomous sitemap generation at `server/sitemap.ts` with centralized URL registry. Collects all URLs from 11 sources: static pages (25 incl. B2C commercial + EV attribute pages), brands pillar (14), services pillar (5), service×brand combinations (70), local city pages (6), programmatic service×brand×city (420), vehicles (DB), FAQs (DB categories+individual), editorial (DB), **growth sub-services (210)**, **growth problem pages (980)**. Auto-splits any category exceeding 500 URLs into numbered chunks. Dynamic sitemap index includes **`/sitemap-images.xml`** (vehicle image sitemap with `<image:image>` tags). 30-minute cache. Admin stats: `GET /api/admin/sitemap-stats`.
+- **SEO Growth Engine**: Autonomous growth module at `client/src/lib/seo-growth-engine.ts` that identifies positioning opportunities and generates optimized pages. Three content dimensions: (1) Sub-service×Brand pages (210: 15 sub-services × 14 brands — e.g. "bateria-alto-voltaje-volkswagen"), (2) Problem×Brand pages (140: 10 EV problems × 14 brands — e.g. "perdida-autonomia-tesla"), (3) Problem×Brand×City pages (840: 10×14×6 — e.g. "error-carga-bmw-sevilla"). Each page includes: H1 optimized with seed-based variation, contextual intro, 3-4 content sections (causes, symptoms, solution, cost/coverage), 4 FAQs, CTA, breadcrumbs, related links, JSON-LD service type. Content varies per slug via hash-based picking to avoid thin content. Vehicle model families (60 models across 14 brands) referenced in content. Admin API: `GET /api/admin/seo-growth-report` returns opportunity analysis with priority ranking. Exports: `generateGrowthPage()`, `parseGrowthSlug()`, `isGrowthSlug()`, `getAllGrowthSlugs()`, `analyzeGrowthOpportunities()`, `getGrowthStats()`. Auto-feeds sitemap.
+- **SEO Audit Script**: `scripts/seo-audit.ts` (run with `npx tsx scripts/seo-audit.ts`) — crawls all sitemap URLs + static routes, checks 16 SEO factors: H1 presence/uniqueness, title/description presence+length, canonical, Open Graph, JSON-LD, images alt text, broken internal links, sitemap coverage, duplicate titles/descriptions, orphan pages. Outputs scored report (0-100) with severity indicators. Concurrent crawling (10 parallel).
+- **SEO Content Generator**: Autonomous structured content engine at `client/src/lib/seo-content-generator.ts`. Generates complete page content for 1,680 combinaciones (5 service×14 brands = 70, +420 city variants, +210 sub-services, +140 problem×brand, +840 problem×brand×city). Each page includes 5 sections: Introduction (contextualized with brand/service/city), Specialization (brand expertise + 4 bullets from service-specific pool), Common Problems (4 curated problems per service type with descriptions), Process (4-6 numbered steps from service-specific procedures), Benefits (4 reasons from 3 rotating benefit sets). Plus 5 FAQs from service-specific templates, CTA with 3 variants, breadcrumbs, 8 related links (cross-service, cross-brand, cross-city), and JSON-LD service type. Seed-based hash picking ensures variation: `pickN()` selects N non-repeating items from pools using deterministic but varying seeds per slug. Content uniqueness score: 100% across all tested combinations. Avg 19 paragraphs per page. API: `GET /api/admin/content-generator` (stats), `?slug=X` (full content for specific slug). Exports: `generateContent()`, `generateServiceBrandContent()`, `generateProblemBrandContent()`, `generateSubServiceBrandContent()`, `getContentStats()`.
+- **Topical Map Generator**: Autonomous topical mapping engine at `client/src/lib/topical-map-generator.ts`. Generates complete knowledge graph of the EV/hybrid repair sector. Stats: 1,801 nodes, 2,875 edges, 37 clusters, 4,583 keywords, 100% coverage score. Node types: pillar (37), cluster (218), leaf (1,486), micro (60). Intent distribution: local 1,266, transactional 280, informational 223, navigational 19, commercial 13. 6 generation layers: (1) Service pillars — 5 services × 14 brands × 6 cities + sub-services, (2) Brand pillars — 14 brands with model families (60 models), (3) Problem clusters — 10 problems × 14 brands × 6 cities with cross-entity links to related services, (4) FAQ clusters — 8 FAQ topics + brand-specific FAQs, (5) Local clusters — 6 cities with geographic links to all local pages, (6) Comparison nodes — 10 brand comparison pairs (VW vs Tesla, Audi vs BMW, etc.) with gap detection for missing pairs. Gap detection: identifies missing pillar pages, missing comparisons, weak intent coverage, missing FAQ categories. Entity coverage reports by brand, service, problem, city. Tree preview for visual representation. API: `GET /api/admin/topical-map` (summary), `?cluster=cluster-problem-error-carga` (cluster detail), `?entityType=brand&entitySlug=volkswagen` (entity nodes). Exports: `generateTopicalMap()`, `getTopicalMapSummary()`, `getClusterDetail()`, `getNodesByEntity()`, `getRelatedNodes()`.
+- **SEO Analytics**: Analytics engine at `client/src/lib/seo-analytics.ts` with admin dashboard at `/admin/seo-analytics`. Aggregates data from all 7 SEO modules into unified metrics. Headline: 1,718 pages, 4,540 keywords, 684 links (22.8 avg/page), 8,400 FAQs, 86% health score. Dashboard has 6 tabs: Overview (stat cards + top clusters + content summary + recommendations), Clusters (brand and service coverage tables with scores), Keywords (intent distribution + gap analysis), Links (anchor diversity + top pages by inbound), Growth (engine composition + architecture breakdown), System (module status + health check). APIs: `GET /api/admin/seo-analytics` (dashboard data), `GET /api/admin/seo-metrics` (full metrics). Sidebar: SEO > SEO Analytics.
+- **SEO Refresh Engine**: Autonomous content freshness engine at `client/src/lib/seo-refresh-engine.ts`. Detects SEO improvement opportunities and generates prioritized refresh tasks across 8 action types (update-faqs, add-internal-links, improve-metadata, add-contextual-content, update-schema, add-related-pages, update-breadcrumbs, refresh-cta). Five triggers: (1) `onNewPage(path)` — generates 8 tasks: inbound link insertion on parent/sibling pages, full internal link plan, contextual insertions, JSON-LD schemas, FAQ multi-layer setup. (2) `onNewService(slug, name)` — generates ~36 tasks: pilar page, 14 brand combinations, postventa nav update, sitemap regeneration, cross-service related links. (3) `onNewBrand(slug, name)` — generates ~62 tasks: brand pilar, all service×brand×city pages, electrificación link, sitemap update, cross-brand related pages. (4) `onNewProblem(slug, name, relatedServices)` — generates problem×brand + problem×brand×city pages, cross-links from related service pages. (5) `runContentAudit(paths?)` — audits metadata (title/desc length), FAQs (count, depth, answer length), internal links (total, pillar coverage, contextual insertions, inbound opportunities), schema (JSON-LD completeness), contextual content (paragraph count, empty sections, bullet count). Maintains content registry with hash-based change detection. API: `GET /api/admin/seo-refresh` (status), `?trigger=new-page&path=...`, `?trigger=new-brand&entity=...&name=...`, `?trigger=content-audit`.
+- **Hydration Fix**: Eliminado el `<script>` que añadía dinámicamente un `<link>` al `<head>` en `app/layout.tsx`. Reemplazado por un `<link rel="stylesheet">` directo para RemixIcon CDN — resuelve el "Unhandled Runtime Error: Hydration failed" de Next.js.
+
+- **Chatbot Web + SEO Feedback Loop**: Sistema completo de chatbot flotante con bucle SEO. Componente `client/src/components/ChatbotWidget.tsx` — widget flotante en esquina inferior derecha con botón WhatsApp encima. El chatbot busca coincidencias en las 406 FAQs de la BD usando scoring por keywords, detecta intención (informacional/comparativa/compra), y devuelve respuesta + enlace a FAQ completa. Tabla `chatbot_conversations` almacena todas las consultas. Admin en `/admin/chatbot`: estadísticas (total, aciertos, tasa de coincidencia, intenciones), listado de preguntas sin respuesta (oportunidades SEO para crear nuevas FAQs), historial completo. Backend: `POST /api/chatbot/message`, `GET /api/admin/chatbot-conversations`, `GET /api/admin/chatbot-stats`, `GET /api/admin/chatbot-unmatched`. Activo en todas las páginas (App.tsx + providers.tsx de Next.js).
+- **Botones flotantes globales**: Botón WhatsApp flotante (`wa.me/34955034600`) + botón de chatbot en todas las páginas, implementados dentro de `ChatbotWidget.tsx`, z-index 50, colores de marca.
+- **AI Search Engine** (`client/src/lib/ai-search-engine.ts`): Módulo de optimización para Google AI Overviews, SGE y LLMs. Genera perfiles AI-Friendly por página con 6 tipos de bloques: definition (50 palabras), direct-answer (47 palabras, citabilidad 92%+), how-it-works, cost-range, related-questions, local-signal. Cada bloque tiene `schemaType`, `entities`, `isDirectAnswer` para máxima citabilidad. LLM Context por página: systemPromptHint, 5 expertiseSignals, 5 trustSignals, 3 freshnessSignals, 3 localSignals, entityChain (9 entidades). StructuredAnswers: 3 respuestas estructuradas tipo recommendation/numeric/yes-no con confidence score. Stats: 70 páginas, LLM readiness 92%, answerability 100%, citability 84%, overview eligibility 92%. Genera `/llms.txt` y `/ai-hints.json` para consumo por LLMs. APIs: `GET /api/admin/ai-search` (summary), `?slug=diagnostico-volkswagen` (profile), `?format=llms-txt`, `?format=ai-hints`. Rutas públicas: `GET /llms.txt`, `GET /ai-hints.json`.
+
+- **Snippet Optimizer** (`client/src/lib/snippet-optimizer.ts`): Módulo de optimización para featured snippets, People Also Ask y AI answers. 11 triggers: qué-es, cómo-funciona, cuánto-cuesta, cuánto-tarda, por-qué-ocurre, cómo-detectar, cuándo-necesito, diferencia-entre, pasos-para, qué-incluye, es-obligatorio. 8 formatos: paragraph (40-60 palabras para definición), numbered-list (pasos numerados), bulleted-list, table (comparativas precio/duración/garantía), definition-box (respuesta directa en caja), comparison-table, step-by-step, people-also-ask. Cada bloque con `estimatedPosition` (1=featured), `htmlHint` (marcado HTML sugerido), `targetQuery`. Snippet Score 83%, featured snippet probability 87%. PAA: 8 preguntas por página. Función especial `generateProblemSnippet()` para páginas de problema. API: `GET /api/admin/snippet-optimizer` (report), `?slug=mantenimiento-bmw` (profile), `?problem=perdida-autonomia&brand=volkswagen` (problem snippets).
+
+- **Knowledge Graph** (`client/src/lib/knowledge-graph.ts`): Grafo de conocimiento interno que conecta todas las entidades del sitio. Stats: 79 entidades, 390 relaciones, cobertura 53%. Tipos de entidad: organization(1), service(20), brand(14), problem(10), symptom(8), component(10), technology(6), regulation(4), location(6). 14 relaciones: ofrece, especializado-en, detecta, resuelve, causa, síntoma-de, compuesto-por, requiere, ubicado-en, cubre, certifica, relacionado-con, subservicio-de, modelo-de, regulado-por, usa-tecnología. Nodos hub: diagnóstico(78 conexiones), reparación(44), Grupo Avisa(42), mantenimiento(28). Componentes incluidos: batería tracción, inversor, BMS, motor eléctrico, cargador OBC, DC/DC, freno regenerativo, refrigeración, HVIL, wallbox. Tecnologías: BEV, PHEV, HEV, FCEV, CCS2, Type2. Regulaciones: ITC-BT-52, MOVES III, IEC 60900, R100. `queryEntity()` retorna vecinos directos, entidades a profundidad-2, internal links sugeridos, FAQs, content hints. `getInternalLinksFromGraph()` genera enlaces contextualizados por path. APIs: `GET /api/admin/knowledge-graph` (report), `?entity=org-grupo-avisa` (entity detail), `?path=/servicios/reparacion-volkswagen` (links).
+
+- **SEO Expansion Engine** (`client/src/lib/seo-expansion-engine.ts`): Motor de detección y generación automática de nuevas oportunidades SEO. 5 fuentes de detección: long-tail (patrones precio/coste/cuánto-cuesta), local-gap (taller+servicio+ciudad), problem-gap (cómo-solucionar+problema+marca), seasonal (revisión verano/invierno, batería frío, etc.), competitor-pattern (comparativas VW vs Tesla, Audi vs BMW, etc.). Stats: 181 oportunidades detectadas, 181 páginas nuevas estimadas, 543 keywords nuevas, growth +259% (70→251 páginas). Cada oportunidad incluye: GeneratedPageSpec completo con title, metaDescription, H1, introduction, 4 sections, 4 FAQs, schema JSON-LD, internalLinks, sitemapEntry. Sitemap expansion: 1,371 entradas adicionales. APIs: `GET /api/admin/seo-expansion` (report), `?slug=precio-diagnostico-volkswagen` (page spec), `?sitemap=true` (sitemap entries).
+
+- **Autonomous SEO System** (`client/src/lib/autonomous-seo-system.ts`): Controlador central que coordina los 15 módulos SEO en un sistema completamente autónomo. Versión 3.0.0-autonomous, nivel de autonomía "fully-auto" (15/15 módulos activos). `runExpansionCycle()`: ejecuta 15 etapas en 127ms — detección de oportunidades, generación de páginas, metadata+schema, FAQs avanzadas, snippet optimization, AI search optimization, knowledge graph, internal links, sitemap, autoridad temática, intent analysis, expansión topical, mapa+entidades, refresco de contenido, métricas finales. Score: 93% (14/15 etapas completadas). Output por ciclo: 181 páginas, 1.680 contenidos, 70 metadata, 50 schemas, 710 FAQs, 1.371 sitemap entries, 181 oportunidades. `getFullSystemStatus()`: status completo de todos los módulos con métricas unificadas. `generateSinglePage(slug)`: genera todos los componentes SEO de una página en un solo call (content+seoBundle+snippets+aiProfile+entityPlan+linkPlan+intentProfile+kgLinks). 12 AutomationCapabilities documentadas con triggers y módulos. APIs: `GET /api/admin/autonomous-seo/status`, `POST /api/admin/autonomous-seo/run-cycle`, `GET /api/admin/autonomous-seo/page?slug=diagnostico-volkswagen`.
+
+- **Topical Authority Builder**: Autonomous authority architecture engine at `client/src/lib/topical-authority-builder.ts`. Builds complete silo structures to establish topical authority. Stats: 35 pillars, 254 clusters, 2,025 pages, 4,820 internal links, avg authority score 95%. Four silo types: (1) Service silos (5): each service pilar → 14 brand clusters → 6 city variants + sub-services per cluster. Example: /diagnostico → diagnostico-volkswagen → diagnostico-volkswagen-sevilla. (2) Brand silos (14): each brand pilar → 5 service links + 5 problem links + model family. (3) Problem silos (10): each problem → 14 brand clusters → 6 city variants + cross-links to diagnostico/reparacion. (4) Local silos (6): each city → all local service pages. Link directions: pillar-to-cluster (w=9), cluster-to-pillar (w=10), cluster-to-cluster (w=5 siblings), cross-pillar (w=6-8), supporting-to-cluster (w=7-8), local-link (w=6). Silo purity analysis: avg 96% (Reparación 96%, Diagnóstico 96%, Mantenimiento 96%, Carga 96%, Garantía 95%). Coverage matrix: 70 cells (5 services × 14 brands), all 100%. Gap detection: missing problem pillar pages, weak interlinking, orphan pages, missing local coverage. Tree preview for visual representation. API: `GET /api/admin/topical-authority` (summary), `?pillar=pillar-service-diagnostico` (pillar detail), `?matrix=true` (coverage matrix). Exports: `buildAuthorityArchitecture()`, `getAuthoritySummary()`, `getPillarDetail()`, `getCoverageMatrix()`.
+- **Entity Reinforcement Engine**: Autonomous entity reinforcement system at `client/src/lib/entity-reinforcement.ts`. Maintains a catalog of 122 entities across 9 categories (organization: 1, brand: 14, service: 5, sub-service: 15, problem: 10, city: 6, model: 60, component: 8, technology: 3). Each entity has: id, name, slug, aliases, parent entity, Schema.org type, importance score (1-10). For any page path, generates a complete `PageEntityPlan` with: primary/secondary entities, heading plan (h1-h3 templates with entity placement and purpose), content plan (per-section entity mentions with frequency, co-occurrences, semantic field), schema plan (AutoRepair/Service/Brand/LocalBusiness/Article structured data), link plan (internal links with entity-aware anchors), FAQ plan (questions/answers with entity mentions and target keywords). Entity density analysis per page: total mentions, unique entities, primary/secondary density %, 9-zone coverage (heading/content/schema/internal-link/faq/meta/breadcrumb/cta/alt-text). Avg score: 95%, avg 10 mentions/page, avg 95% zone coverage. Correct Spanish articles (el/la) for service names in FAQs. API: `GET /api/admin/entity-reinforcement` (summary), `?path=/servicios/diagnostico-volkswagen` (full page plan), `?catalog=true` (entity catalog), `GET /api/admin/entity-reinforcement/report` (full report with sample plans). Exports: `getEntityCatalog()`, `getPageEntityPlan()`, `getEntityReinforcementReport()`, `getEntitySummary()`.
+- **Topic Expansion Engine**: Autonomous topic discovery engine at `client/src/lib/topic-expansion-engine.ts`. Detects new SEO expansion opportunities across 11 categories: síntomas de avería (12 topics), problemas comunes (12), mantenimiento (8), reparación (6), diagnóstico (6), componentes (6), tecnología (5), guías (5), costes (4), comparativas (10), modelos específicos (variable). 191 topics discovered → 2,517 new pages suggested. Each topic includes: slug, category, related service, brand coverage, keywords, volume/competition tiers, priority score, and page suggestions with path, title, target keywords, funnel stage, difficulty, and content brief. Model-specific expansion: generates maintenance/problems/battery topics per vehicle model (ID.3, e-tron, Model 3, etc.). Comparison expansion: 10 brand pairs (VW vs Tesla, Audi vs BMW, etc.). Existing coverage detection: cross-references 1,190+ growth slugs to avoid duplicates. API: `GET /api/admin/topic-expansion` (summary), `?category=sintoma-averia` (by category), `?brand=volkswagen` (by brand), `?service=diagnostico` (by service), `GET /api/admin/topic-expansion/report` (full report). Exports: `discoverTopics()`, `getExpansionReport()`, `getTopicsByCategory()`, `getTopicsByBrand()`, `getTopicsByService()`, `getExpansionSummary()`.
+- **Search Intent Engine**: Autonomous intent classification and funnel alignment engine at `client/src/lib/search-intent-engine.ts`. Classifies every page and keyword into 4 search intents (informational, commercial, transactional, navigational) aligned with 4 funnel stages (awareness, consideration, decision, retention). Handles 19 page types (home, service-pillar, service-brand, service-brand-city, sub-service-brand, brand-pillar, problem-brand, problem-brand-city, problem-pillar, local-landing, faq-hub, faq-detail, comparison, comparison-hub, contact, postventa-pillar, electrificacion, dealers, promotion, vehicle-detail, legal). Each page profile includes: primary/secondary intent, funnel stage, content format, intent score (0-100), target keywords, CTA type, SERP feature targets, content guidance with per-section intent alignment, entity resolution (brand/service/problem/city/sub-service), and conversion path. Keyword classifier uses 4 modifier dictionaries (informational: 17 modifiers, commercial: 21, transactional: 15, navigational: 8) with priority ordering (nav > trans > comm > info). Funnel analysis detects bottlenecks and generates recommendations. Gap detection identifies missing content types (comparisons, retention content, brand problem coverage). Intent score avg: 91/100 across 1,711 pages. 0 mismatches. API: `GET /api/admin/search-intent` (summary), `?path=/servicios/X` (page profile), `?keyword=X` (classify single), `?keywords=a,b,c` (classify batch), `GET /api/admin/search-intent/report` (full report with all page profiles). Exports: `getPageIntentProfile()`, `classifyKeyword()`, `classifyKeywords()`, `generateIntentReport()`, `getIntentSummary()`.
+- **Internal Link Optimizer**: Autonomous link planning engine at `client/src/lib/internal-link-optimizer.ts`. Given any page path, generates a complete `LinkPlan` with 8 link categories: pillar (brand/service/postventa/contacto), sibling (other services for same brand or other problems), child (city variants + sub-services), parent (service-brand for city pages), cross-entity (problem↔service bidirectional, other brands), geographic (city variants + local pages), FAQ (contextual category links), CTA (contact + catalog). Each link includes: anchor text, href, title attr, context type, priority score, and anchor type classification (exact-match/branded/contextual/generic/navigational). Also generates: contextual text insertions (brand names → brand pages, model names → service pages), inbound opportunity detection (which pages SHOULD link to this page with suggested anchors). Health analysis: samples 30+ pages, reports avg 25.2 links/page, 0 orphan risk, balanced anchor diversity (30% exact-match, 36% contextual, 20% navigational). API: `GET /api/admin/link-optimizer` (health report), `?path=/servicios/diagnostico-volkswagen` (full link plan for a page). Exports: `generateLinkPlan()`, `generateBulkLinkPlans()`, `analyzeLinkHealth()`. Works with existing `internal-linking.ts` (entity detection) and `seo-links.ts` (keyword matching) systems.
+- **Keyword Scanner**: Autonomous long-tail keyword detection at `client/src/lib/keyword-scanner.ts`. Scans 6 dimensions: service×brand combinations (with synonyms), price queries, problem×brand, vehicle model keywords, sub-service variants, FAQ patterns, and competitive/topical terms. Outputs 4,540+ deduplicated keywords with intent classification (transactional/informational/navigational/commercial), target mapping (landing/faq/blog/service/problem/local), priority ranking (alta/media/baja), entity tagging (brand/service/city/problem/model), and gap detection (230 opportunities without existing pages). API: `GET /api/admin/keyword-scan` (report), `?brand=X` / `?service=X` / `?target=X` / `?gaps=true` (filtered), `?format=csv` (full CSV export). Clusters keywords by head term with priority sorting. Exports: `scanKeywords()`, `generateScanReport()`, `getKeywordsByBrand()`, `getKeywordsByService()`, `getKeywordGaps()`, `getKeywordsByTarget()`, `exportKeywordsCSV()`.
+- **Indexation Control**: robots.txt blocks `/admin`, `/api/`, `/confirmacion-*`, `/talleres/` (internal rewrite path), `/_next/data/`. Only sitemap index referenced in robots.txt. `X-Robots-Tag: noindex, nofollow` header on all `/api/` responses. `/talleres/:ciudad` 301-redirects to canonical `/taller-electricos-:ciudad`. Legal pages (aviso-legal, terminos, politica-cookies, condiciones-uso, accesibilidad) are noindex+follow and excluded from sitemaps. Confirmation pages are noindex+nofollow. Admin layout noindex+nofollow. `/preguntas?q=` canonical points to `/preguntas`.
+
+## Migration Notes (Vite → Next.js)
+- All client components have `"use client"` directive
+- wouter replaced by compatibility layer at `client/src/lib/router.ts` (wraps next/link, usePathname, useRouter, useParams)
+- `app/` directory contains page wrappers that import from `client/src/pages/`
+- SEO metadata handled by Next.js `metadata` exports in each page wrapper (replaces client-side SEOHead)
+- `server/vite.ts` no longer used — Next.js replaces Vite for page serving
+- Express v5 catch-all route: `app.all("/{*path}", handle)` for Next.js handler
+
+## Pages (Public)
+- `/` — Home
+- `/promociones-electricos` — Electric vehicle promotions
+- `/promociones-hibridos` — Hybrid vehicle promotions
+- `/autoplus` — Plan MOVES/Autoplus subsidies
+- `/postventa` — After-sales service
+- `/preguntas` — FAQ main page
+- `/preguntas/:categoria` — FAQ category page
+- `/preguntas/:categoria/:pregunta` — FAQ question detail
+- `/concesionarios` — Dealers/contact page
+- `/electrificacion` — Guide: when to electrify
+- `/conductores-adopcion` — Guide: driver adoption
+- `/terminos` — Terms and conditions
+- `/vehiculos/electricos/:slug` — Electric vehicle detail
+- `/vehiculos/hibridos/:slug` — Hybrid vehicle detail
+- `/marcas/:slug` — Brand pillar pages (14 pages: volkswagen, audi, skoda, cupra, seat, tesla, byd, hyundai, bmw, mercedes-benz, kia, volvo, peugeot, renault). SSR with AutoDealer/AutoRepair+FAQPage+BreadcrumbList JSON-LD.
+- `/servicios/:slug` — Service pillar pages (5 pages: reparacion, diagnostico, mantenimiento, carga, garantia) + cluster pages (70 pages: service × brand combos). Pillar pages link to all brand clusters; cluster pages link back to both brand and service pillars. Content engine (`content-engine.ts`) generates unique content per page: brand-specific intros via rotating templates, technical specialization section with platform/battery/voltage data, common problems (3 per brand×service), technology specs grid (8 specs), unique FAQs (3 per combo), and varied CTAs. H1 and meta titles rotate via deterministic hash to avoid duplicate content.
+- `/novedades` — Editorial hub: news/updates
+- `/novedades/:slug` — News article detail
+- `/guias` — Editorial hub: practical guides
+- `/guias/:slug` — Guide article detail
+- `/comparativas` — Editorial hub: vehicle comparisons
+- `/comparativas/:slug` — Comparison article detail
+- `/consejos` — Editorial hub: tips and advice
+- `/consejos/:slug` — Advice article detail
+- `/confirmacion-*` — 4 confirmation pages
+
+## Admin Panel (/admin/*)
+- `/admin/login` — Admin login page
+- `/admin` — Dashboard (lead stats, daily chart, status/source breakdown, conversion rate, recent leads, activity)
+- `/admin/vehicles` — CRUD for vehicles (search, filter, full form with specs)
+- `/admin/brands` — CRUD for vehicle brands
+- `/admin/leads` — Lead management (search, filter by status/source, status change, notes, export CSV)
+- `/admin/pages` — CMS pages CRUD (card layout with search, SEO preview)
+- `/admin/pages/edit/:slug` — Full page section editor (sections + SEO metadata)
+- `/admin/dealers` — Dealer locations CRUD
+- `/admin/faqs` — FAQ categories + questions CRUD
+- `/admin/testimonials` — Customer testimonials CRUD
+- `/admin/promotions` — Vehicle promotions CRUD (electric/hybrid)
+- `/admin/services` — After-sales services CRUD
+- `/admin/plans` — Maintenance plans CRUD
+- `/admin/settings` — Site-wide settings (contact, branding, social, SEO, LeadSpark integration)
+- `/admin/whatsapp-faq` — WhatsApp → FAQ automático (auto-extract, auto-publish, sitemap ping a Google/Bing)
+- `/admin/sections` — Content sections editor per page
+- `/admin/editorial` — Editorial content CRUD (novedades, guías, comparativas, consejos)
+- `/admin/seo-audit` — Auditoría SEO automática (H1, metadata, canonical, schema, sitemap, enlaces, SSR, img alt)
+- `/admin/users` — User management with roles (superadmin only)
+- `/admin/activity` — Activity log viewer
+- **Default login**: admin / admin123
+
+## Data Model
+- `users` — Admin users (username, password, role, displayName, email, active)
+- `brands` — Vehicle manufacturers (name, slug, country, description)
+- `vehicles` — Electric/hybrid vehicles (vehicleType: electrico|hibrido, specs, pricing, SEO meta, featured flag, galleryUrls[], videoUrl)
+- `leads` — Contact form submissions (name, email, phone, message, status, source, notes, assignedTo, interest, marketingConsent)
+- `lead_notes` — Admin notes history per lead (leadId, userId, content)
+- `whatsapp_conversations` — Imported WhatsApp chats for FAQ extraction (phoneNumber, messages, extractedFaqs, status)
+- `whatsapp_webhook_log` — Raw webhook payloads from WhatsApp API
+- `pages` — CMS pages (title, slug, content, SEO meta)
+- `dealers` — Dealer locations (name, brand, address, city, province, coordinates)
+- `faq_categories` — FAQ categories (name, slug, icon)
+- `faqs` — FAQ questions (categoryId, slug, question, answer, videoUrl, metaTitle, metaDescription, relatedSlugs)
+- `testimonials` — Customer reviews (name, role, company, rating, content)
+- `promotions` — Vehicle promotions (title, vehicleType, brandName, price, features)
+- `services` — After-sales services (title, description, icon, features, category)
+- `maintenance_plans` — Maintenance plans (name, price, features, highlighted)
+- `site_settings` — Key-value site configuration
+- `sections` — Dynamic content sections per page (pageSlug, sectionKey, content jsonb)
+- `activity_log` — Admin activity tracking
+- `editorial_content` — Editorial articles (type: novedad|guia|comparativa|consejo, slug, title, excerpt, content markdown, category, tags[], author, featuredImage, published, publishedAt, updatedAt, metaTitle, metaDescription, readingTime, relatedSlugs[], relatedVehicleType)
+
+## API Endpoints (Public)
+- `GET /api/brands` — List all brands
+- `GET /api/vehicles` — List all vehicles
+- `GET /api/vehicles/featured` — Featured vehicles
+- `POST /api/leads` — Submit contact form
+- `GET /api/dealers` — Active dealers
+- `GET /api/testimonials` — Published testimonials
+- `GET /api/promotions` — Active promotions
+- `GET /api/services` — Active services
+- `GET /api/maintenance-plans` — All plans
+- `GET /api/faqs` — FAQ categories + published questions
+- `GET /api/faqs/by-category/:slug` — FAQ category with its questions
+- `GET /api/faqs/by-slug/:slug` — Single FAQ with category + related questions
+- `GET /api/editorial` — All editorial content (optional `?type=novedad|guia|comparativa|consejo`)
+- `GET /api/editorial/recent?limit=N` — Recent published articles
+- `GET /api/editorial/:slug` — Single editorial article by slug
+- `GET /api/editorial/all` — All editorial content (published + drafts)
+- `GET /api/sections/:pageSlug` — Active sections for a page
+
+## API Endpoints (Admin — requires auth)
+- `POST /api/admin/login` — Login
+- `POST /api/admin/logout` — Logout
+- `GET /api/admin/me` — Session check
+- `GET /api/admin/dashboard` — Dashboard stats
+- Full CRUD for: vehicles, brands, pages, dealers, faq-categories, faqs, testimonials, promotions, services, maintenance-plans, sections
+- `GET /api/admin/leads` + `GET /:id` + `PUT /:id` + `POST /:id/notes` + `DELETE` + CSV export
+- `GET /api/admin/leads/stats` — Lead analytics (total, byStatus, bySource, thisWeek, thisMonth, dailyCounts)
+- `GET/POST/DELETE /api/admin/whatsapp-conversations` + `/process` + `/approve` + `/auto-process`
+- `GET/PUT /api/admin/whatsapp-auto-settings` — WhatsApp auto-publish config
+- `POST /api/admin/ping-sitemap` — Manual sitemap ping to Google/Bing
+- `POST /api/webhooks/whatsapp` — WhatsApp webhook (auto-processes FAQs when enabled)
+- `GET/POST/PUT/DELETE /api/admin/users` — User management (superadmin)
+- `GET/PUT /api/admin/settings` — Site settings
+- `GET /api/admin/activity-log` — Activity log
+
+## Contact Info
+- Phone: 955 034 600
+- Email: info@grupoavisa.com
+- WhatsApp: wa.me/34955034600
+- Location: Sevilla, Andalucía
+- Advisor: Ana (10+ years at Avisa)
+
+## Performance Optimization (Core Web Vitals)
+- **Preconnect/DNS-prefetch**: fonts.googleapis.com, fonts.gstatic.com, cdnjs.cloudflare.com (preconnect); unpkg.com (dns-prefetch) — all in `app/layout.tsx <head>`
+- **Font Loading**: Google Fonts moved from CSS `@import` (render-blocking) to `<link rel="preload" as="style">` + `<link rel="stylesheet">` in layout.tsx (non-blocking)
+- **Hero LCP Image**: Preloaded via `<link rel="preload" as="image" fetchPriority="high">` in layout.tsx; `<img>` has `fetchPriority="high"`, `loading="eager"`, explicit `width/height` (1440×580) to prevent CLS
+- **Logo Images**: Navbar logo: `width=160 height=48 fetchPriority="high" loading="eager"`; Footer logo: `width=133 height=40 loading="lazy"`
+- **Leaflet CSS**: Removed from `globals.css` `@import` (was render-blocking on ALL pages). Now loaded dynamically via `useEffect` only in `DealerMapSection.tsx` and `concesionarios.tsx` (the only components that use maps)
+- **Leaflet JS**: Already lazy-loaded via `<Script strategy="lazyOnload">` in layout.tsx
+- **Dynamic Imports (Code Splitting)**: All public pages except HomePage are `lazy()` imports in `App.tsx` — reduces initial JS bundle. Admin pages were already lazy
+- **Below-fold Images**: Gallery/related vehicle images in `vehiculo-electrico.tsx` and `vehiculo-hibrido.tsx` use `loading="lazy" decoding="async"`; dealer logos use `loading="lazy" decoding="async" width/height`
+- **RemixIcon CSS**: Deferred loading — removed render-blocking `@import` from globals.css; now loaded via `<link rel="preload" as="style">` + inline script that creates `<link rel="stylesheet">` dynamically after parse. `<noscript>` fallback for non-JS. preconnect to cdnjs.cloudflare.com
+- **Image Dimensions (CLS)**: All vehicle card images (ElectricPromotions, HybridPromotions) have explicit `width/height` + `loading="lazy" decoding="async"`. CTA background image: `width=1920 height=600`. Advisor avatars: explicit dimensions. Promo hero images: `fetchPriority="high"` + `width/height`
+- **Hydration Fixes**: Confirmation pages use `useSearchParams()` (not `window.location.search`); confetti uses `useRef`+`useEffect` pattern (not `Math.random()` at render). Sidebar skeleton width uses `useId()`-based deterministic hash (not `Math.random()`)
+- **Removed unnecessary "use client"**: HeroSection, CTASection, MyBusinessSection — pure presentational components without hooks/browser APIs
+
+## SEO (Next.js Native)
+- `app/layout.tsx` — Root layout with metadata API (title template `%s | Grupo Avisa`, OG, Twitter, geo, robots, viewport, icons)
+- `app/json-ld.tsx` — Server component rendering AutoDealer + WebSite + SiteNavigationElement + AggregateRating JSON-LD (schema.org) directly in HTML (no next/script)
+- `client/src/components/SEOHead.tsx` — Client-side JSON-LD builders: `buildBreadcrumbJsonLd()`, `buildFaqJsonLd()`, `buildVehicleJsonLd()`, `buildServiceJsonLd()`, `buildReviewJsonLd()`, `buildAggregateRatingJsonLd()`, `buildLocalBusinessWithReviewsJsonLd()`, `buildPostventaServiceJsonLd()`
+- **JSON-LD per page**: BreadcrumbList on all pages; FAQPage on preguntas + postventa; Car on vehicle detail pages; AutoRepair on postventa; Review + AggregateRating on home; LocalBusiness on concesionarios
+- **Internal Linking SEO System**:
+  - `client/src/lib/seo-links.ts` — Keyword→URL dictionary (brands, services, FAQs, contact, vehicle types). `findLinkMatches()` with dedup, max-links-per-block, excludeUrls, word-boundary regex matching
+  - `client/src/lib/seo-link-renderer.tsx` — `renderLinkedText()` and `renderBoldAndLinkedText()` for integrating auto-links with bold markdown rendering
+  - `client/src/components/AutoLinkedText.tsx` — React component wrapping text with automatic internal links. Props: text, links, maxLinks, excludeUrls, linkClassName, as
+  - Applied in: postventa FAQ answers + technician description, autoplus hero + FAQ answers, preguntas-detalle (all FAQ answer paragraphs via renderBoldText override), electrificacion hero + key paragraphs, concesionarios FAQ answers, conductores-adopcion hero
+  - Brand links: `/marcas/{slug}` (volkswagen, audi, skoda, cupra, seat, tesla, byd, hyundai, bmw, mercedes-benz, kia, volvo, peugeot, renault)
+  - Service links: /postventa (diagnostics, maintenance, battery repair, charging points), /autoplus (Plan MOVES, subsidies)
+  - FAQ links: /preguntas/{category} (autonomia, carga, costes)
+  - Contact links: /concesionarios (test drive, appointments)
+- **Sitemap System** (Express-served, split into sub-sitemaps):
+  - `server/sitemap.ts` — Generates all sitemap XML files with `fetchDynamicUrls()` pulling from DB
+  - `/sitemap.xml` — Sitemap index referencing all sub-sitemaps
+  - `/sitemap-pages.xml` — 14 static pages (home, promotions, postventa, legal, etc.)
+  - `/sitemap-vehicles.xml` — Dynamic vehicles from DB (electric + hybrid, ~12+ URLs)
+  - `/sitemap-faqs.xml` — FAQ categories + individual FAQ detail pages (~26+ URLs)
+  - `/sitemap-brands.xml` — Dynamic brands from DB (~10+ URLs)
+  - `/sitemap-services.xml` — Programmatic SEO service×brand pages (70 URLs)
+  - `fetchDynamicUrls()` in `server/sitemap.ts` — Robust DB fetch with per-entity error logging (never fails silently)
+  - Cache: `Cache-Control: public, max-age=3600`
+- `app/robots.ts` — Next.js native robots.txt (blocks /admin, /api/, /confirmacion-*; AI bot rules for GPTBot, ClaudeBot, etc.; lists all 5 sitemap URLs)
+- Each `app/*/page.tsx` exports `metadata` or `generateMetadata` with: title, description, keywords, canonical, openGraph (url + type)
+- Homepage uses `title: { absolute: "..." }` to avoid template duplication
+- Vehicle detail pages (`[slug]/page.tsx`) render Car + BreadcrumbList JSON-LD server-side per vehicle
+- Service×brand pages (`app/servicios/[slug]/page.tsx`) render AutoRepair + FAQPage + BreadcrumbList JSON-LD; data in `client/src/lib/servicios-data.ts`
+- `app/admin/layout.tsx` — Admin layout with `robots: { index: false, follow: false }` (noindex)
+- Legal pages: `noindex, follow` | Confirmation pages: `noindex, nofollow`
+- `app/not-found.tsx` — 404 page with metadata (noindex)
+- `GET /llms.txt` — Public LLM-readable site description (Express route)
+- `GET /ai-hints.json` — Public structured JSON for AI crawlers (Express route)
+- HTTP security headers: X-Content-Type-Options, X-Frame-Options (production only), Referrer-Policy, Permissions-Policy
+
+## Key Files
+- `app/layout.tsx` — Next.js root layout (metadata, fonts, providers)
+- `app/json-ld.tsx` — Server component: AutoDealer + WebSite JSON-LD
+- `server/sitemap.ts` — Sitemap index + sub-sitemaps (pages, vehicles, FAQs, brands)
+- `app/robots.ts` — Next.js native robots.txt generation
+- `app/providers.tsx` — Client providers (QueryClientProvider)
+- `app/globals.css` — Global styles (TailwindCSS)
+- `app/*/page.tsx` — Next.js page wrappers (42 pages total)
+- `client/src/lib/router.ts` — wouter → Next.js compatibility layer
+- `client/src/pages/` — Original page components (reused as client components)
+- `client/src/components/` — Shared components (Navbar, Footer, etc.)
+- `shared/schema.ts` — All Drizzle table definitions
+- `server/index.ts` — Express + Next.js custom server
+- `server/auth.ts` — Session auth + admin user seeding
+- `server/admin-routes.ts` — All admin API routes
+- `server/routes.ts` — Public + admin route registration
+- `server/storage.ts` — Full CRUD storage interface
+- `server/whatsapp-auto.ts` — WhatsApp FAQ auto-extraction
+- `next.config.mjs` — Next.js configuration (aliases, image domains, allowedDevOrigins)
+- `tailwind.config.ts` — TailwindCSS config
+- `server/seed.ts` — Database seeding
+
+## Dynamic Data (API-Driven)
+- FAQ pages (`/preguntas`, `/preguntas/:categoria`, `/preguntas/:categoria/:pregunta`) load from `/api/faqs` endpoints
+- Testimonials on `/autoplus` page load from `/api/testimonials`
+- Promotion models on `/promociones-electricos` and `/promociones-hibridos` load from `/api/promotions`, filtered by `vehicleType` and grouped by `brandName`
+- Services and maintenance plans on `/postventa` load from `/api/services` and `/api/maintenance-plans`
+- Content sections on all pages load from `/api/sections/:pageSlug` — all 14 sections populated with full content data
+- Home page "Ofertas eléctricos" and "Promociones híbridos" sections load featured vehicles from `/api/vehicles/featured`

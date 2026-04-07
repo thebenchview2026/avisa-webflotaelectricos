@@ -1,0 +1,332 @@
+LeadSpark - Payloads por Formulario — Web Eléctricos Grupo Avisa
+Endpoint: POST https://leadspark.grupoavisa.com/api/leads Content-Type: application/json
+Dominio: electricos.grupoavisa.com
+Todos los formularios de electricos.grupoavisa.com envían exclusivamente a este endpoint.
+
+IMPORTANTE: Esta web es B2C (consumidor final). NO incluir campos company, cif ni fleetSize.
+source_detail siempre: "Web Eléctricos"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F01 - Home Contacto (ContactSection)
+Ubicación: / (sección de contacto del home)
+Componente: client/src/components/home/ContactSection.tsx
+formName: Home Contacto Eléctricos (ContactSection)
+
+{
+  "version": "1.0.0",
+  "formName": "Home Contacto Eléctricos (ContactSection)",
+  "client": {
+    "name": "Ana García",
+    "phone": "+34 600 111 222",
+    "email": "ana@gmail.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://electricos.grupoavisa.com/"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Home Contacto Eléctricos (ContactSection)",
+      "pageType": "home"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Me interesa comprar un eléctrico | Interés: coche eléctrico | Lead desde web | form=Home Contacto Eléctricos (ContactSection) | url=https://electricos.grupoavisa.com/ | page_type=home",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F02 - Contacto Página (ContactForm)
+Ubicación: /contacto
+Componente: client/src/components/ContactForm.tsx
+formName: Contacto Eléctricos (ContactForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Contacto Eléctricos (ContactForm)",
+  "client": {
+    "name": "Carlos Martínez",
+    "phone": "+34 611 222 333",
+    "email": "carlos@hotmail.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://electricos.grupoavisa.com/contacto"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Contacto Eléctricos (ContactForm)",
+      "pageType": "contact"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Quiero información sobre coches eléctricos | Lead desde web | form=Contacto Eléctricos (ContactForm) | url=https://electricos.grupoavisa.com/contacto | page_type=contact",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F03 - Ficha Vehículo (ContactForm + vehicleId)
+Ubicación: /vehiculo/{slug}   (ej: /vehiculo/volkswagen-id4-pro)
+Componente: client/src/components/ContactForm.tsx (con vehicleId + vehicleName)
+formName: Ficha Vehículo Eléctrico (ContactForm)
+
+{
+  "version": "1.0.0",
+  "formName": "Ficha Vehículo Eléctrico (ContactForm)",
+  "client": {
+    "name": "Laura Sánchez",
+    "phone": "+34 622 333 444",
+    "email": "laura@gmail.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Volkswagen",
+      "model": "ID.4 Pro",
+      "vehicleType": "electrico",
+      "url": "https://electricos.grupoavisa.com/vehiculo/volkswagen-id4-pro"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Ficha Vehículo Eléctrico (ContactForm)",
+      "pageType": "vehicle_detail"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Estoy interesado en el Volkswagen ID.4 Pro. Me gustaría recibir más información. | Lead desde web | form=Ficha Vehículo Eléctrico (ContactForm) | url=https://electricos.grupoavisa.com/vehiculo/volkswagen-id4-pro | page_type=vehicle_detail | brand=Volkswagen | model=ID.4 Pro",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F04 - CTA Vehículos Eléctricos (PromocionesElectricos)
+Ubicación: /vehiculos-electricos  (sección CTA al final de la página)
+Componente: client/src/pages/promociones-electricos.tsx
+formName: Interés Vehículo Eléctrico (PromocionesElectricos)
+
+{
+  "version": "1.0.0",
+  "formName": "Interés Vehículo Eléctrico (PromocionesElectricos)",
+  "client": {
+    "name": "Pedro Romero",
+    "phone": "+34 633 444 555",
+    "email": "pedro@outlook.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "Volkswagen ID.3",
+      "vehicleType": "electrico",
+      "url": "https://electricos.grupoavisa.com/vehiculos-electricos"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Interés Vehículo Eléctrico (PromocionesElectricos)",
+      "pageType": "electricos_catalog"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Me interesa el Volkswagen ID.3 | Lead desde web | form=Interés Vehículo Eléctrico (PromocionesElectricos) | url=https://electricos.grupoavisa.com/vehiculos-electricos | page_type=electricos_catalog | model=Volkswagen ID.3 | origen=electricos",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F05 - CTA Vehículos Híbridos (PromocionesHibridos)
+Ubicación: /vehiculos-hibridos  (sección CTA al final de la página)
+Componente: client/src/pages/promociones-hibridos.tsx
+formName: Interés Vehículo Híbrido (PromocionesHibridos)
+
+{
+  "version": "1.0.0",
+  "formName": "Interés Vehículo Híbrido (PromocionesHibridos)",
+  "client": {
+    "name": "María López",
+    "phone": "+34 644 555 666",
+    "email": "maria@yahoo.es"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "SEAT León e-Hybrid",
+      "vehicleType": "hibrido_enchufable",
+      "url": "https://electricos.grupoavisa.com/vehiculos-hibridos"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Interés Vehículo Híbrido (PromocionesHibridos)",
+      "pageType": "hibridos_catalog"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Me interesa el SEAT León e-Hybrid | Lead desde web | form=Interés Vehículo Híbrido (PromocionesHibridos) | url=https://electricos.grupoavisa.com/vehiculos-hibridos | page_type=hibridos_catalog | model=SEAT León e-Hybrid | origen=hibridos",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F06 - Cita Postventa (PostventaPage)
+Ubicación: /postventa
+Componente: client/src/pages/postventa.tsx  (función AppointmentForm)
+formName: Cita Taller Eléctricos (PostventaPage)
+Nota: incluye campos específicos de vehículo (matrícula, marca, modelo, servicio, concesionario, fecha, hora)
+
+{
+  "version": "1.0.0",
+  "formName": "Cita Taller Eléctricos (PostventaPage)",
+  "client": {
+    "name": "Roberto Jiménez",
+    "phone": "+34 655 666 777",
+    "email": "roberto@gmail.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "Audi",
+      "model": "e-tron 50 quattro",
+      "vehicleType": "electrico",
+      "url": "https://electricos.grupoavisa.com/postventa"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Cita Taller Eléctricos (PostventaPage)",
+      "pageType": "postventa"
+    },
+    "dealerLocation": "Sevilla",
+    "adCampaignName": "",
+    "comment": "Cita taller: Revisión programada | Matrícula: 1234BCD | Fecha: 2026-04-20 09:00 | Concesionario: Avisa Sevilla | Necesito revisión del sistema de carga | tipo=cita-postventa | Lead desde web | form=Cita Taller Eléctricos (PostventaPage) | url=https://electricos.grupoavisa.com/postventa | page_type=postventa | brand=Audi | model=e-tron 50 quattro",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F07 - Autoplus / Plan MOVES (AutoplusPage)
+Ubicación: /autoplus
+Componente: client/src/pages/autoplus.tsx
+formName: Solicitud Autoplus MOVES (AutoplusPage)
+Nota: gestión de ayudas Plan MOVES para compra de vehículo eléctrico/híbrido
+
+{
+  "version": "1.0.0",
+  "formName": "Solicitud Autoplus MOVES (AutoplusPage)",
+  "client": {
+    "name": "Isabel Moreno",
+    "phone": "+34 666 777 888",
+    "email": "isabel@gmail.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "electrico",
+      "url": "https://electricos.grupoavisa.com/autoplus"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Solicitud Autoplus MOVES (AutoplusPage)",
+      "pageType": "autoplus"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Solicitud Autoplus: gestión Plan MOVES | Tipo vehículo: Turismo eléctrico puro | Quiero información sobre las ayudas disponibles | source=autoplus | Lead desde web | form=Solicitud Autoplus MOVES (AutoplusPage) | url=https://electricos.grupoavisa.com/autoplus | page_type=autoplus | tipo_vehiculo=Turismo eléctrico puro",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+F08 - Contacto Concesionarios (ConcesionariosPage)
+Ubicación: /concesionarios
+Componente: client/src/pages/concesionarios.tsx  (función ContactFormSection)
+formName: Contacto Concesionario Eléctricos (ConcesionariosPage)
+
+{
+  "version": "1.0.0",
+  "formName": "Contacto Concesionario Eléctricos (ConcesionariosPage)",
+  "client": {
+    "name": "David Torres",
+    "phone": "+34 677 888 999",
+    "email": "david@gmail.com"
+  },
+  "sales_lead": {
+    "car": {
+      "make": "",
+      "model": "",
+      "vehicleType": "",
+      "url": "https://electricos.grupoavisa.com/concesionarios"
+    },
+    "origin": {
+      "source_detail": "Web Eléctricos",
+      "formName": "Contacto Concesionario Eléctricos (ConcesionariosPage)",
+      "pageType": "concesionarios"
+    },
+    "dealerLocation": "",
+    "adCampaignName": "",
+    "comment": "Me gustaría conocer los concesionarios con stock de eléctricos | origen=concesionarios | Lead desde web | form=Contacto Concesionario Eléctricos (ConcesionariosPage) | url=https://electricos.grupoavisa.com/concesionarios | page_type=concesionarios",
+    "leadType": "Sales"
+  }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RESUMEN DE FORMULARIOS — electricos.grupoavisa.com
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Código  | formName                                           | URL
+--------|---------------------------------------------------|----------------------------
+F01     | Home Contacto Eléctricos (ContactSection)          | /
+F02     | Contacto Eléctricos (ContactForm)                  | /contacto
+F03     | Ficha Vehículo Eléctrico (ContactForm)             | /vehiculo/{slug}
+F04     | Interés Vehículo Eléctrico (PromocionesElectricos) | /vehiculos-electricos
+F05     | Interés Vehículo Híbrido (PromocionesHibridos)     | /vehiculos-hibridos
+F06     | Cita Taller Eléctricos (PostventaPage)             | /postventa
+F07     | Solicitud Autoplus MOVES (AutoplusPage)            | /autoplus
+F08     | Contacto Concesionario Eléctricos (ConcesionariosPage) | /concesionarios
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTAS DE IMPLEMENTACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. DIFERENCIAS CON WEB DE FLOTA (grupoavisa.com):
+   - source_detail: "Web Eléctricos" (flota usa "Web Avisa")
+   - Dominio base: electricos.grupoavisa.com
+   - Sin campos company, cif, fleetSize (B2C, no B2B)
+   - vehicleType se rellena con "electrico" o "hibrido_enchufable" cuando aplica
+   - El campo comment usa lenguaje de consumidor final, no de flota empresarial
+
+2. CAMPOS client COMUNES EN TODOS LOS FORMULARIOS:
+   - name / nombre → client.name
+   - phone / telefono → client.phone
+   - email → client.email
+   - (Opcional según formulario: modelo → car.model)
+
+3. CAMPOS ESPECÍFICOS POR FORMULARIO:
+   - F01: campo "interes" → incluir en comment como "Interés: {valor}"
+   - F03: vehicleId + vehicleName → car.make, car.model, car.vehicleType
+   - F06: matricula, marca, modelo, servicio, concesionario, fecha, hora, comentarios
+          → car.make + car.model + dealerLocation + detalle en comment
+   - F07: tipo_vehiculo → car.vehicleType + detalle en comment
+
+4. CONSTRUCCIÓN DEL CAMPO comment (patrón estándar):
+   {mensaje_usuario} | Lead desde web | form={formName} | url={url_actual} | page_type={pageType}
+   + campos adicionales según formulario: brand={marca} | model={modelo} | origen={origen}
+
+5. ESTADO ACTUAL DEL BACKEND (server/routes.ts):
+   La función forwardToLeadSpark() actualmente envía un payload simplificado.
+   Para enviar el payload completo version/formName/client/sales_lead descrito en
+   este documento, es necesario actualizar dicha función para construir el
+   payload correcto según el formName recibido de cada formulario.

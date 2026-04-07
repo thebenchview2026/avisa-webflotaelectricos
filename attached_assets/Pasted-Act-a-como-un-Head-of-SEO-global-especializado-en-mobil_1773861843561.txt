@@ -1,0 +1,275 @@
+Actúa como un Head of SEO global especializado en mobile-first indexing, UX móvil, CRO y plataformas digitales de alto rendimiento.
+
+Tu tarea es auditar esta web desde un enfoque 100% móvil:
+https://0b9b522c-ed8d-4d30-86f5-c7de473780ad-00-1errchqbhasip.picard.replit.dev/
+
+━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ REGLAS CRÍTICAS (READ-ONLY)
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* NO modificar nada
+* NO escribir código
+* NO ejecutar cambios
+* Solo análisis, diagnóstico y recomendaciones
+
+Tu rol equivale a:
+👉 Head of SEO + Mobile UX Expert + CRO Lead
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎯 OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Evaluar si esta web está construida como:
+
+👉 sistema mobile-first real
+👉 máquina de captación y conversión en móvil
+👉 plataforma optimizada para interacción rápida
+
+Y detectar:
+
+👉 qué limita rendimiento, SEO y conversiones en móvil
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🧱 ORDEN DE ANÁLISIS (OBLIGATORIO)
+━━━━━━━━━━━━━━━━━━━━━━━
+
+---
+
+## 1. RENDIMIENTO MÓVIL (🔴 CRÍTICO)
+
+Analizar:
+
+* LCP
+* INP
+* CLS
+* tiempo de carga real en móvil
+
+Detectar:
+
+* imágenes pesadas
+* JS bloqueante
+* carga innecesaria
+
+👉 Diagnóstico:
+¿Es rápida en condiciones reales (4G / móvil medio)?
+
+---
+
+## 2. MOBILE-FIRST INDEXING (🔴 CRÍTICO)
+
+* contenido visible en móvil vs desktop
+* indexación real
+* contenido oculto
+
+👉 Evaluar:
+si Google está indexando correctamente la versión móvil
+
+---
+
+## 3. UX MÓVIL REAL (🔴 CRÍTICO)
+
+Analizar como usuario:
+
+* navegación con una mano
+* facilidad de uso
+* claridad inmediata
+
+👉 Detectar:
+
+* fricción
+* pasos innecesarios
+* confusión
+
+---
+
+## 4. ABOVE THE FOLD (🔴 CRÍTICO)
+
+Analizar primer impacto:
+
+* mensaje claro
+* propuesta de valor
+* CTA visible
+
+👉 Evaluar:
+
+* si el usuario entiende la web en 3 segundos
+
+---
+
+## 5. CONVERSIÓN EN MÓVIL (🔴 CRÍTICO)
+
+* CTAs visibles
+
+* botones flotantes:
+
+  * WhatsApp
+  * chatbot
+
+* facilidad de:
+
+  * buscar coche
+  * contactar
+
+👉 Detectar:
+fugas de conversión
+
+---
+
+## 6. ESTRUCTURA DE CONTENIDO (🔴 CRÍTICO)
+
+Evaluar:
+
+* bloques cortos
+* contenido escaneable
+* uso de listas
+
+❌ evitar:
+
+* texto largo
+* contenido denso
+
+---
+
+## 7. CONTENIDO SNACKABLE (🟡 IMPORTANTE)
+
+Evaluar:
+
+* datos rápidos:
+
+  * precio
+  * km
+  * año
+
+👉 facilidad de lectura en scroll
+
+---
+
+## 8. NAVEGACIÓN (🟡 IMPORTANTE)
+
+* menú simple
+* accesos rápidos
+* estructura clara
+
+👉 detectar:
+complejidad innecesaria
+
+---
+
+## 9. INTERACCIÓN (🟡 IMPORTANTE)
+
+Analizar:
+
+* scroll
+* clicks
+* interacción con IA o chatbot
+
+👉 evaluar engagement
+
+---
+
+## 10. SEO DE INTENCIÓN MÓVIL (🔴 CRÍTICO)
+
+Evaluar si responde a:
+
+* búsquedas rápidas
+* queries cortas
+* intención directa
+
+Ej:
+
+* “coche barato”
+* “golf segunda mano”
+
+---
+
+## 11. SISTEMA DINÁMICO (🔴 CRÍTICO)
+
+Evaluar:
+
+* FAQs dinámicas
+* contenido generado automáticamente
+* adaptación a búsquedas reales
+
+👉 escalabilidad SEO
+
+---
+
+## 12. BOTONES FLOTANTES (🔴 CRÍTICO)
+
+Verificar:
+
+* WhatsApp
+* chatbot
+
+👉 siempre visibles en móvil
+
+---
+
+## 13. UI MOBILE-FIRST (🟡 IMPORTANTE)
+
+Evaluar:
+
+* jerarquía visual
+* tamaño de botones
+* legibilidad
+* diseño tipo app
+
+👉 percepción premium
+
+---
+
+## 14. ENGAGEMENT (🟡)
+
+* tiempo en página
+* interacción
+* profundidad
+
+---
+
+## 15. SCALABILITY MOBILE (🔴 CRÍTICO)
+
+Evaluar si la web puede:
+
+👉 escalar tráfico móvil
+👉 soportar crecimiento SEO
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📊 SALIDA OBLIGATORIA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Score SEO móvil (0-100)
+
+2. Score por bloques
+
+3. Problemas:
+
+* 🔴 bloqueadores
+* 🟡 mejoras
+* 🟢 optimización
+
+4. Quick wins
+
+5. Recomendaciones específicas
+
+6. Evaluación de conversión móvil
+
+7. Veredicto final:
+
+👉 ¿esto es mobile-first real o solo responsive?
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎯 MODO RESPUESTA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* Extremadamente específico
+* Sin consejos genéricos
+* Priorizar impacto real
+* Pensar como experto mundial en SEO móvil y conversión

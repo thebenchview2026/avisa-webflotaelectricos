@@ -1,0 +1,123 @@
+Actúa como un arquitecto de sistemas SEO + AI especializado en coches eléctricos e híbridos.
+
+Tu tarea es diseñar e implementar un sistema de chatbot + SEO feedback loop en esta web: https://electricos.grupoavisa.com
+
+━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ REGLAS
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* No romper funcionalidad existente
+* Sistema escalable
+* Integración con SEO existente
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎯 OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Crear un sistema donde:
+
+* el chatbot capture preguntas reales de usuarios
+* genere contenido SEO automáticamente
+* aumente tráfico y conversiones
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🧠 CONTEXTO ESPECÍFICO EV
+━━━━━━━━━━━━━━━━━━━━━━━
+
+El chatbot debe responder sobre:
+
+* autonomía
+* batería
+* carga
+* tiempo de carga
+* ahorro vs gasolina
+* ayudas (MOVES)
+* comparativas EV vs híbrido
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🔁 SEO FEEDBACK LOOP
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Detectar preguntas tipo:
+
+* “cuánto tarda en cargar un coche eléctrico”
+* “cuál tiene más autonomía”
+* “cuál es el mejor eléctrico calidad precio”
+
+Generar:
+
+* FAQs optimizadas SEO
+* contenido indexable
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📄 GENERACIÓN AUTOMÁTICA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* FAQs dinámicas
+* páginas long-tail
+* contenido educativo
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📊 CAPTURA DE INTENCIÓN
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Clasificar:
+
+* informacional
+* comparativa
+* compra
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🧠 ADMIN / CMS
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Permitir:
+
+* editar preguntas
+* editar respuestas
+* validar contenido generado
+* priorizar contenido SEO
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📱 BOTONES FLOTANTES
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Implementar:
+
+* botón WhatsApp
+* botón chatbot
+
+En todas las páginas
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🗺️ INDEXACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* añadir FAQs al sitemap
+* optimización SEO automática
+
+---
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📊 SALIDA
+━━━━━━━━━━━━━━━━━━━━━━━
+
+* arquitectura del sistema
+* flujo completo
+* modelo de datos
+* integración con SEO
+* mejoras recomendadas

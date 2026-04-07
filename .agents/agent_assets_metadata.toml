@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "Rlu9dXZOzjpWF3S9XuOjx"
+uri = "file://attached_assets/LeadSpark-Payloads-electricos-grupoavisa.txt"
+type = "text"
+title = "LeadSpark Payloads — electricos.grupoavisa.com"
